@@ -1,0 +1,54 @@
+<%- include('./includes/header') %>
+<div class="row">
+  <div class="col">
+    <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item"><a href="/sales">Sales</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Edit Sale</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+<div class="container mt-5">
+  <h1 class="my-3 text-dark">Update Sale</h1>
+  <form action="" method="post" class="row my-5" enctype="multipart/form-data">
+    <div class="form-group col-md-12 col-lg-6 mb-3">
+      <label>Item</label>
+      <select name="item_id" class="form-control">
+        <option value="">Select an item</option>
+        <% for(let item of items ) { %>
+            <option value="<%= item.id %>"><%= item %></option>                    
+        <% } %>
+    </select>
+    </div>
+    <div class="form-group col-md-12 col-lg-6 mb-3">
+        <label>Buyer</label>
+        <select name="user_id" class="form-control">
+          <option value="">Select an user</option>
+          <% for(let user of users ) { %>
+              <option value="<%= user.id %>"><%= user %></option>                    
+          <% } %>
+      </select>
+    </div>
+    <div class="form-group col-md-12 col-lg-6 mb-3">
+      <label>Quantity</label>
+      <input type="number" name="quantity" value="<%= sale.quantity %>" class="form-control" />
+    </div>
+    <div class="form-group col-md-12 col-lg-6 mb-3">
+      <label>Selling Price</label>
+      <input type="number" name="selling_price" value="<%= sale.selling_price %>" class="form-control" />
+    </div>
+    <div class="form-group col-md-12 col-lg-6 mb-3">
+      <label>Date</label>
+      <input type="date" name="date" value="<%= sale.date %>" class="form-control" />
+    </div>
+
+    <div class="form-group col-md-12 col-lg-6 mb-3">
+      <label>Remarks</label>
+      <textarea name="remark" id="remark" class="form-control" rows="2"><%= sale.remark %></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary col-12">Submit</button>
+  </form>
+</div>
+<%- include('./includes/footer') %>

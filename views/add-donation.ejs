@@ -1,0 +1,294 @@
+<%- include('./includes/header') %>
+<div class="container mt-5">
+  <h1 class="my-3 text-dark">Add Donation</h1>
+  <form action="" method="post" class="row my-5" enctype="multipart/form-data">
+    <div class="form-group col-md-12 col-lg-6 mb-3">
+      <label>Item</label>
+      <select name="item_id" class="form-control">
+        <option value="">Select an item</option>
+        <% for(let item of items ) { %>
+        <option value="<%= item.id %>"><%= item %></option>
+        <% } %>
+      </select>
+      <!-- Button to Open the Modal -->
+      <button
+      type="button"
+      class="btn btn-primary btn-icon-split my-2"
+      data-toggle="modal"
+        data-target="#myItem"
+        >
+        <span class="icon text-white-50">
+          <i class="fas fa-plus"></i>
+        </span>
+        <span class="text">New Item</span>
+      </button>
+    </div>
+    <div class="form-group col-md-12 col-lg-6 mb-3">
+      <label>Vendor</label>
+      <select name="vendor_id" class="form-control">
+        <option value="">Select an vendor</option>
+        <% for(let vendor of vendors ) { %>
+          <option value="<%= vendor.id %>"><%= vendor %></option>
+          <% } %>
+        </select>
+        <!-- Button to Open the Modal -->
+
+      <button
+      type="button"
+      class="btn btn-success btn-icon-split my-2"
+      data-toggle="modal"
+      data-target="#myVendor"
+    >
+      <span class="icon text-white-50">
+        <i class="fas fa-plus"></i>
+      </span>
+      <span class="text">New Vendor</span>
+    </button>
+    </div>
+    <div class="form-group col-md-12 col-lg-6 mb-3">
+      <label>Quantity</label>
+      <input type="number" name="quantity" class="form-control" />
+    </div>
+    <div class="form-group col-md-12 col-lg-6 mb-3">
+      <label>Unit Cost</label>
+      <input type="number" name="unit_cost" class="form-control" />
+    </div>
+    <div class="form-group col-md-12 col-lg-6 mb-3">
+      <label>Date</label>
+      <input type="date" name="date" class="form-control" />
+    </div>
+
+    <div class="form-group col-md-12 col-lg-6 mb-3">
+      <label>Remarks</label>
+      <textarea
+        name="remark"
+        id="remark"
+        class="form-control"
+        rows="2"
+      ></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary col-12">Submit</button>
+  </form>
+  
+  <form class="my-5 form" id="itemForm">
+    <div class="modal" id="myItem">
+      <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+          
+            <div class="modal-header" id="modal-body">
+              <h4 class="modal-title">Add New Item</h4>
+              <button type="button" class="close" data-dismiss="modal">
+                &times;
+              </button>
+            </div>
+            <div class="modal-body">
+              
+                <div class="form-group col-12 mb-3">
+                  <label>Name</label>
+                  <input type="text" name="name" class="form-control" />
+                </div>
+                <div class="form-group col-12 mb-3">
+                  <label>Desciption</label>
+                  <textarea
+                    class="form-control"
+                    id="address"
+                    name="description"
+                    rows="2"
+                  ></textarea>
+                </div>
+                <div class="form-group col-12 mb-3">
+                  <label>Brand</label>
+                  <input type="text" name="brand" class="form-control" />
+                </div>
+                <div class="form-group col-12 mb-3">
+                  <label>Model</label>
+                  <input type="text" name="model" class="form-control" />
+                </div>
+                <div class="form-group col-12 mb-3">
+                  <label>Manufacturer</label>
+                  <input type="text" name="manufacturer" class="form-control" />
+                </div>
+                <div class="form-group col-12 mb-3">
+                  <label>Usage Mode</label><br />
+                  <div class="form-check-inline">
+                    <label class="form-check-label">
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        name="usage_mode"
+                        value="Sale"
+                      />Sale
+                    </label>
+                  </div>
+                  <div class="form-check-inline">
+                    <label class="form-check-label">
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        name="usage_mode"
+                        value="Lease"
+                      />Lease
+                    </label>
+                  </div>
+                  <div class="form-check-inline">
+                    <label class="form-check-label">
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        name="usage_mode"
+                        value="Use"
+                      />Use
+                    </label>
+                  </div>
+                  <div class="form-check-inline">
+                    <label class="form-check-label">
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        name="usage_mode"
+                        value="Consumption"
+                      />Consumption
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group col-12 mb-3">
+                  <label>Cost Price</label>
+                  <input type="text" name="cost_price" class="form-control" />
+                </div>
+                <div class="form-group col-12 mb-3">
+                  <label>Useful Life</label>
+                  <input type="text" name="useful_life" class="form-control" />
+                </div>
+                <div class="form-group col-12 mb-3">
+                  <label>Manufacture Date</label>
+                  <input
+                    type="date"
+                    name="manufacture_date"
+                    class="form-control"
+                  />
+                </div>
+                <div class="form-group col-12 mb-3">
+                  <label>Procurement Date</label>
+                  <input
+                    type="date"
+                    name="procurement_date"
+                    class="form-control"
+                  />
+                </div>
+                <div class="form-group col-12 mb-3">
+                  <label>Color</label>
+                  <input type="color" name="color" class="form-control" />
+                </div>
+                <div class="form-group col-12 mb-3">
+                  <label>Serial Number</label>
+                  <input
+                    type="text"
+                    name="serial_number"
+                    class="form-control"
+                  />
+                </div>
+                <div class="form-group col-12 mb-3">
+                  <label>Type</label><br />
+                  <div class="form-check-inline">
+                    <label class="form-check-label">
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        name="type"
+                        value="Fixed"
+                      />Fixed
+                    </label>
+                  </div>
+                  <div class="form-check-inline">
+                    <label class="form-check-label">
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        name="type"
+                        value="Suppliable"
+                      />Suppliable
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group col-12 mb-3">
+                  <label>Price</label>
+                  <input
+                    type="number"
+                    id="price"
+                    name="price"
+                    class="form-control"
+                  />
+                </div>
+                <div class="form-group col-12 mb-3">
+                  <label>Photo</label>
+                  <input
+                    type="file"
+                    id="photo"
+                    name="photo"
+                    class="form-control"
+                  />
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">
+                Submit
+              </button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal">
+                Close
+              </button>
+            </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <form class="my-5 form" id="vendorForm">
+    <div class="modal" id="myVendor">
+      <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+          
+            <div class="modal-header" id="modal-body">
+              <h4 class="modal-title">Add New Vendor</h4>
+              <button type="button" class="close" data-dismiss="modal">
+                &times;
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group col-12 mb-3">
+                <label>Name</label>
+                <input type="text" name="name" class="form-control" />
+              </div>
+              <div class="form-group col-12 mb-3">
+                <label>Email</label>
+                <input type="email" name="email" class="form-control" />
+              </div>
+              <div class="form-group col-12 mb-3">
+                <label>Phone Number</label>
+                <input type="tel" name="phone" class="form-control" />
+              </div>
+              <div class="form-group col-12 mb-3">
+                <label>Address</label>
+                <textarea
+                  class="form-control"
+                  id="address"
+                  name="address"
+                  rows="2"
+                ></textarea>
+              </div>
+              <div class="form-group col-12 mb-3">
+                <label>Photo</label>
+                <input type="file" id="photo" name="photo" class="form-control" />
+              </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">
+                Submit
+              </button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal">
+                Close
+              </button>
+            </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+  <%- include('./includes/footer') %>

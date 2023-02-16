@@ -1,0 +1,1045 @@
+<%- include('includes/header') %>
+  <section>
+    <div class="container py-3">
+      <!-- breadcrumb -->
+      <div class="row">
+        <div class="col">
+          <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+            <ol class="breadcrumb mb-0">
+              <li class="breadcrumb-item"><a href="/">Home</a></li>
+              <li class="breadcrumb-item"><a href="/items">Items</a></li>
+              <li class="breadcrumb-item active" aria-current="page">
+                Item Profile
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+      <!-- breadcrumb -->
+      <div class="row">
+        <div class="col-12 px-4">
+          <!-- togglable nav  -->
+          <ul class="nav nav-tabs ">
+            <li class="nav-item">
+              <a class="nav-link active" data-toggle="tab" href="#details"><i class="fas fa-eye text-success"></i>
+                Details</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#sales">
+                <i class="fas fa-shopping-cart text-warning"></i> Sales</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#supplies">
+                <i class="fas fa-plus text-primary"></i> Supplies</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#damages"><i class="fas fa-ban text-danger"></i> Damages</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#consumptions"><i class="fas fa-times-circle text-muted"></i>
+                Consumptions</a>
+            </li>
+          </ul>
+          <!-- togglable nav  -->
+
+          <!-- tab content  -->
+          <div class="tab-content">
+            <!-- first child  -->
+            <div class="tab-pane active" id="details">
+              <div class="col-12">
+                <div class="card-body">
+                  <div class="d-flex mb-4">
+                    <h5 class="text-primary font-weight-bold">
+                      <%= item.name %> Details
+                    </h5>
+                    <a href="update" class="btn btn-primary float-right ml-auto btn-icon-split">
+                      <span class="icon text-white-50">
+                        <i class="fas fa-edit"></i>
+                      </span>
+                      <span class="text">Edit Item</span>
+                    </a>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-4 my-3">
+                      <div class="card p-2 text-center">
+                        <div class="card-body">
+                          <img src="/items/<%- item.photo %>" alt="photo"
+                            class="rounded-circle w-20 my-3 img-fluid bordered" />
+                          <input type="file" id="itemImg">
+                          <label for="uploadBtn" class="btn btn-primary m-0"><i class="fas fa-upload"></i>
+                            Upload</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-8 my-3">
+                      <div class="row">
+                        <div class="col-6 mb-3">
+                          <div class="card">
+                            <div class="card-body">
+                              <span class="text-muted font-italic font-weight-bold">Name:
+                              </span>
+                              <span class="text-primary">
+                                <%= item.name %>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-6 mb-3">
+                          <div class="card">
+                            <div class="card-body">
+                              <span class="text-muted font-italic font-weight-bold">Manufacturer:
+                              </span>
+                              <span class="text-primary">
+                                <%= item.manufacturer %>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-6 mb-3">
+                          <div class="card">
+                            <div class="card-body">
+                              <span class="text-muted font-italic font-weight-bold">Brand:
+                              </span>
+                              <span class="text-primary">
+                                <%= item.brand %>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-6 mb-3">
+                          <div class="card">
+                            <div class="card-body">
+                              <span class="text-muted font-italic font-weight-bold">Model:
+                              </span>
+                              <span class="text-primary">
+                                <%= item.model %>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-6 mb-3">
+                          <div class="card">
+                            <div class="card-body">
+                              <span class="text-muted font-italic font-weight-bold">Usage mode:
+                              </span>
+                              <span class="text-primary">
+                                <%= item.usage_mode %>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-6 mb-3">
+                          <div class="card">
+                            <div class="card-body">
+                              <span class="text-muted font-italic font-weight-bold">Type:
+                              </span>
+                              <span class="text-primary">
+                                <%= item.type %>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-6 mb-3">
+                          <div class="card">
+                            <div class="card-body">
+                              <span class="text-muted font-italic font-weight-bold">Cost Price:
+                              </span>
+                              <span class="text-primary">
+                                <%= item.cost_price %>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-6 mb-3">
+                          <div class="card">
+                            <div class="card-body">
+                              <span class="text-muted font-italic font-weight-bold">Useful life:
+                              </span>
+                              <span class="text-primary">
+                                <%= item.useful_life %>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-6 mb-3">
+                          <div class="card">
+                            <div class="card-body">
+                              <span class="text-muted font-italic font-weight-bold">Manufacture Date:
+                              </span>
+                              <span class="text-primary">
+                                <%= item.manufacture_date.toDateString() %>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-6 mb-3">
+                          <div class="card">
+                            <div class="card-body">
+                              <span class="text-muted font-italic font-weight-bold">Procurement Date:
+                              </span>
+                              <span class="text-primary">
+                                <%= item.procurement_date?.toDateString() %>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-6 mb-3">
+                          <div class="card">
+                            <div class="card-body">
+                              <span class="text-muted font-italic font-weight-bold">Total Stocks:
+                              </span>
+                              <span class="text-primary">
+                                <%= %>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-6 mb-3">
+                          <div class="card">
+                            <div class="card-body">
+                              <span class="text-muted font-italic font-weight-bold">Available Stocks:
+                              </span>
+                              <span class="text-primary">
+                                <%= %>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- first child  -->
+
+            <!-- second child  -->
+            <div class="tab-pane container fade" id="sales">
+              <div class="col-12">
+                <div class="card-body">
+                  <div class="d-flex mb-4">
+                    <h5 class="text-primary font-weight-bold">
+                      <%= item.name %> Sales
+                    </h5>
+                    <!-- Item Supply Modal button -->
+                    <button type="button" class="btn btn-primary btn-icon-split my-2 ml-auto" data-toggle="modal"
+                      data-target="#itemSale">
+                      <span class="icon text-white-50">
+                        <i class="fas fa-plus"></i>
+                      </span>
+                      <span class="text">Sale Item</span>
+                    </button>
+                    <!-- Item Sale Modal button-->
+
+                    <!-- Item Sale Modal form-->
+                    <div class="modal" id="itemSale">
+                      <div class="modal-dialog modal-dialog-scrollable">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title">
+                              Add <%= item.name %> Sale
+                            </h5>
+                            <button type="button" class="close" data-dismiss="modal">
+                              &times;
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <!-- Item Sale Modal Form-->
+                            <form action="/add-sale" id="itemSaleForm" method="post" class="row"
+                              enctype="multipart/form-data">
+                              <input type="hidden" name="item_id" value="<%= item.id %>">
+                              <div class="form-group col-12 mb-3">
+                                <label>Buyer</label>
+                                <select name="user_id" class="form-control">
+                                  <option value="">Select a buyer</option>
+                                  <% for(let user of users ) { %>
+                                    <option value="<%= user.id %>">
+                                      <%= user %>
+                                    </option>
+                                    <% } %>
+                                </select>
+                                <!-- Button to Open the Collapse -->
+
+                                <button type="button" class="btn btn-success btn-icon-split my-2" data-toggle="collapse"
+                                  data-target="#myBuyer">
+                                  <span class="icon text-white-50">
+                                    <i class="fas fa-plus"></i>
+                                  </span>
+                                  <span class="text">New Buyer</span>
+                                </button>
+                                <!-- Button to Open the Collapse -->
+
+                                <!-- New Buyer Form Collapse-->
+                                <div id="myBuyer" class="collapse my-3">
+                                  <div class="card-body bg-light rounded">
+                                    <div class="form-group col-12 mb-3">
+                                      <label>First Name</label>
+                                      <input form="addBuyer" type="text" name="first_name" class="form-control" />
+                                    </div>
+                                    <div class="form-group col-12 mb-3">
+                                      <label>Last name</label>
+                                      <input form="addBuyer" type="text" name="last_name" class="form-control" />
+                                    </div>
+                                    <div class="form-group col-12 mb-3">
+                                      <label>Username</label>
+                                      <input form="addBuyer" type="text" name="username" class="form-control" />
+                                    </div>
+                                    <div class="form-group col-12 mb-3">
+                                      <label>Email</label>
+                                      <input form="addBuyer" type="email" name="email" class="form-control" />
+                                    </div>
+                                    <div class="form-group col-12 mb-3">
+                                      <label>Password</label>
+                                      <input form="addBuyer" type="password" name="password" class="form-control" />
+                                    </div>
+                                    <div class="form-group col-12 mb-3">
+                                      <label>Phone Number</label>
+                                      <input form="addBuyer" type="tel" name="phone" class="form-control" />
+                                    </div>
+                                    <div class="form-group col-12 mb-3">
+                                      <label>DOB</label>
+                                      <input form="addBuyer" type="date" name="dob" class="form-control" />
+                                    </div>
+                                    <div class="form-group col-12 mb-3">
+                                      <label>Address</label>
+                                      <textarea form="addBuyer" class="form-control" id="address" name="address"
+                                        rows="2"></textarea>
+                                    </div>
+                                    <div class="form-group col-12 mb-3">
+                                      <label>Gender</label><br />
+                                      <div class="form-check-inline">
+                                        <label class="form-check-label">
+                                          <input form="addBuyer" type="radio" class="form-check-input" name="gender"
+                                            value="Male" />Male
+                                        </label>
+                                      </div>
+                                      <div class="form-check-inline">
+                                        <label class="form-check-label">
+                                          <input form="addBuyer" type="radio" class="form-check-input" name="gender"
+                                            value="Female" />Female
+                                        </label>
+                                      </div>
+                                    </div>
+                                    <div class="form-group col-12 mb-3">
+                                      <label>Photo</label>
+                                      <input form="addBuyer" type="file" id="photo" name="photo" class="form-control" />
+                                    </div>
+                                    <button form="addBuyer" type="submit" class="btn btn-primary">Submit</button>
+                                  </div>
+                                </div>
+                                <!-- New Buyer form  collapse-->
+
+                              </div>
+                              <div class="form-group col-12 mb-3">
+                                <label>Quantity</label>
+                                <input type="number" name="quantity" class="form-control" />
+                              </div>
+                              <div class="form-group col-12 mb-3">
+                                <label>Unit Cost</label>
+                                <input type="number" name="unit_cost" class="form-control" />
+                              </div>
+                              <div class="form-group col-12 mb-3">
+                                <label>Date</label>
+                                <input type="date" name="date" class="form-control" />
+                              </div>
+                              <div class="form-group col-12 mb-3">
+                                <label>Remarks</label>
+                                <textarea name="remark" id="remark" class="form-control" rows="2"></textarea>
+                              </div>
+                            </form>
+                            <form action="" id="addBuyer" method="post"></form>
+                          </div>
+                          <div class="modal-footer">
+                            <button form="itemSupplyForm" type="submit" class="btn btn-primary">
+                              Submit
+                            </button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">
+                              Close
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Item Supply Modal Form-->
+                  </div>
+
+                  <!-- Item Supply Table -->
+                  <div class="table-responsive ">
+                    <table class="table table-bordered table-muted" id="dataTable" width="100%" cellspacing="0">
+                      <thead>
+                        <tr>
+                          <th scope="col">Date</th>
+                          <th scope="col">Buyer</th>
+                          <th scope="col">Quantity</th>
+                          <th scope="col">Unit Cost</th>
+                          <th scope="col">Total Cost</th>
+                         
+                          <th scope="col">Remarks</th>
+                          <th scope="col">Actions</th>
+                        </tr>
+                      </thead>
+
+                      <!-- <tbody>
+
+
+                        <% for( let sale of item.sales ) { %>
+                          <tr>
+
+                            <td scope="col">
+                              <%= sale.date?.toDateString() %>
+                            </td>
+                            <td scope="col">
+                              <%= sale.user %>
+                            </td>
+                            <td scope="col">
+                              <%= sale.quantity %>
+                            </td>
+                            <td scope="col">
+                              <%= sale.unit_cost %>
+                            </td>
+                            <td scope="col">
+                              <%= sale.total_cost %>
+                            </td>
+                            <td scope="col">
+                              <%= sale.remark %>
+                            </td>
+
+                            <td scope="col dropdown">
+                              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                              </button>
+                              <ul class="dropdown-menu">
+                                </li><a href="# " class="dropdown-item"><i class="fas fa-eye text-success"></i> Balance
+                                  Payment</a></li>
+
+                              </ul>
+                            </td>
+                          </tr>
+                          <% } %>
+
+                      </tbody> -->
+                    </table>
+                  </div>
+                  <!-- Item Supply Table -->
+                </div>
+              </div>
+            </div>
+            <!-- second child  -->
+
+            <!-- third child  -->
+            <div class="tab-pane container fade" id="supplies">
+              <div class="col-12">
+                <div class="card-body">
+                  <div class="d-flex mb-4">
+                    <h5 class="text-primary font-weight-bold">
+                      <%= item.name %> Supplies
+                    </h5>
+                    <!-- Item Supply Modal button -->
+                    <button type="button" class="btn btn-primary btn-icon-split my-2 ml-auto" data-toggle="modal"
+                      data-target="#itemSupply">
+                      <span class="icon text-white-50">
+                        <i class="fas fa-plus"></i>
+                      </span>
+                      <span class="text">Supply Item</span>
+                    </button>
+                    <!-- Item Supply Modal button-->
+
+                    <!-- Item Supply Modal form-->
+                    <div class="modal" id="itemSupply">
+                      <div class="modal-dialog modal-dialog-scrollable">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title">
+                              Add <%= item.name %> Supply
+                            </h5>
+                            <button type="button" class="close" data-dismiss="modal">
+                              &times;
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <!-- Item Supply Modal Form-->
+                            <form action="/add-supply" id="itemSupplyForm" method="post" class="row my-5"
+                              enctype="multipart/form-data">
+                              <input type="hidden" name="item_id" value="<%= item.id %>">
+                              <div class="form-group col-12 mb-3">
+                                <label>Vendor</label>
+                                <select name="vendor_id" class="form-control">
+                                  <option value="">Select an vendor</option>
+                                  <% for(let vendor of vendors ) { %>
+                                    <option value="<%= vendor.id %>">
+                                      <%= vendor %>
+                                    </option>
+                                    <% } %>
+                                </select>
+                                <!-- Button to Open the Collapse -->
+
+                                <button type="button" class="btn btn-success btn-icon-split my-2" data-toggle="collapse"
+                                  data-target="#myVendor">
+                                  <span class="icon text-white-50">
+                                    <i class="fas fa-plus"></i>
+                                  </span>
+                                  <span class="text">New Vendor</span>
+                                </button>
+                                <!-- Button to Open the Collapse -->
+
+                                <!-- New Vendor Form Collapse-->
+                                <div id="myVendor" class="collapse my-3">
+                                  <div class="card-body bg-light rounded">
+                                    <div class="form-group col-12 mb-3">
+                                      <label>Name</label>
+                                      <input form="addVendor" type="text" name="name" class="form-control" />
+                                    </div>
+                                    <div class="form-group col-12 mb-3">
+                                      <label>Email</label>
+                                      <input form="addVendor" type="email" name="email" class="form-control" />
+                                    </div>
+                                    <div class="form-group col-12 mb-3">
+                                      <label>Phone Number</label>
+                                      <input form="addVendor" type="tel" name="phone" class="form-control" />
+                                    </div>
+                                    <div class="form-group col-12 mb-3">
+                                      <label>Address</label>
+                                      <textarea form="addVendor" class="form-control" id="address" name="address"
+                                        rows="2"></textarea>
+                                    </div>
+                                    <div class="form-group col-12 mb-3">
+                                      <label>Photo</label>
+                                      <input form="addVendor" type="file" id="photo" name="photo"
+                                        class="form-control" />
+                                    </div>
+                                    <button form="addVendor" type="submit" class="btn btn-primary">Submit</button>
+                                  </div>
+                                </div>
+                                <!-- New vendor form  collapse-->
+
+                              </div>
+                              <div class="form-group col-12 mb-3">
+                                <label>Quantity</label>
+                                <input type="number" name="quantity" class="form-control" />
+                              </div>
+                              <div class="form-group col-12 mb-3">
+                                <label>Unit Cost</label>
+                                <input type="number" name="unit_cost" class="form-control" />
+                              </div>
+                              <div class="form-group col-12 mb-3">
+                                <label>Date</label>
+                                <input type="date" name="date" class="form-control" />
+                              </div>
+                              <div class="form-group col-12 mb-3">
+                                <label>Remarks</label>
+                                <textarea name="remark" id="remark" class="form-control" rows="2"></textarea>
+                              </div>
+                            </form>
+                            <form action="" id="addVendor" method="post"></form>
+                          </div>
+                          <div class="modal-footer">
+                            <button form="itemSupplyForm" type="submit" class="btn btn-primary">
+                              Submit
+                            </button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">
+                              Close
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Item Supply Modal Form-->
+                  </div>
+
+                  <!-- Item Supply Table -->
+                  <div class="table-responsive ">
+                    <table class="table table-bordered table-muted" id="dataTable" width="100%" cellspacing="0">
+                      <thead>
+                        <tr>
+                          <th scope="col">Date</th>
+                          <th scope="col">Vendor</th>
+                          <th scope="col">Quantity</th>
+                          <th scope="col">Unit Cost</th>
+                          <th scope="col">Total Cost</th>
+                       
+                          <th scope="col">Remarks</th>
+                          <th scope="col">Actions</th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+
+
+                        <% for( let supply of item.supplies ) { %>
+                          <tr>
+
+                            <td scope="col">
+                              <%= supply.date?.toDateString() %>
+                            </td>
+                            <td scope="col">
+                              <%= supply.vendor %>
+                            </td>
+                            <td scope="col">
+                              <%= supply.quantity %>
+                            </td>
+                            <td scope="col">
+                              <%= supply.unit_cost %>
+                            </td>
+                            <td scope="col">
+                              <%= supply.total_cost %>
+                            </td>
+                            <!-- <td scope="col">
+                              <%= supply.amount_paid %>
+                            </td>
+                            <td scope="col">
+                              <%= supply.balance %>
+                            </td> -->
+                            <td scope="col">
+                              <%= supply.remark %>
+                            </td>
+
+                            <td scope="col dropdown">
+                              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                              </button>
+                              <ul class="dropdown-menu">
+                                </li><a href="# " class="dropdown-item"><i class="fas fa-eye text-success"></i> Balance
+                                  Payment</a></li>
+
+                              </ul>
+                            </td>
+                          </tr>
+                          <% } %>
+
+                      </tbody>
+                    </table>
+                  </div>
+                  <!-- Item Supply Table -->
+                </div>
+              </div>
+            </div>
+            <!-- third child  -->
+
+            <!-- fourth child  -->
+            <div class="tab-pane container fade" id="damages">
+              <div class="col-12">
+                <div class="card-body">
+                  <div class="d-flex mb-4">
+                    <h5 class="text-primary font-weight-bold">
+                      <%= item.name %> Damages
+                    </h5>
+                    <button type="button" class="btn btn-danger btn-icon-split my-2 ml-auto" data-toggle="modal"
+                      data-target="#damageItem">
+                      <span class="icon text-white-50">
+                        <i class="fas fa-ban"></i>
+                      </span>
+                      <span class="text">Damaged Item</span>
+                    </button>
+                  </div>
+
+                  <div class="modal" id="damageItem">
+                    <div class="modal-dialog modal-dialog-scrollable">
+                      <div class="modal-content">
+                        <div class="modal-header" id="modal-body">
+                          <h5 class="modal-title">
+                            Record <%= item.name %> Damage
+                          </h5>
+                          <button type="button" class="close" data-dismiss="modal">
+                            &times;
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <form action="/add-damage" method="post" id="damageItemForm" class="row"
+                            enctype="multipart/form-data">
+                            <input type="hidden" name="item_id" class="form-control" value="<%= item.id %> " />
+                            <!-- Button to Open the Modal -->
+                            <div class="form-group col-12 mb-3">
+                              <label>User</label>
+                              <select name="user_id" class="form-control">
+                                <option value="">Select a custodian</option>
+                                <% for(let user of users ) { %>
+                                  <option value="<%= user.id %>">
+                                    <%= user %>
+                                  </option>
+                                  <% } %>
+                              </select>
+                              <!-- Button to Open the Collapse -->
+
+                              <button type="button" class="btn btn-success btn-icon-split my-2" data-toggle="collapse"
+                                data-target="#myUser">
+                                <span class="icon text-white-50">
+                                  <i class="fas fa-plus"></i>
+                                </span>
+                                <span class="text">New User</span>
+                              </button>
+                              <!-- Button to Open the Collapse -->
+
+                              <!-- New User Form Collapse-->
+
+                              <div id="myUser" class="collapse my-3">
+                                <div class="card-body bg-light rounded">
+                                  <div class="form-group col-12 mb-3">
+                                    <label>First Name</label>
+                                    <input form="addUser" type="text" name="first_name" class="form-control" />
+                                  </div>
+                                  <div class="form-group col-12 mb-3">
+                                    <label>Last name</label>
+                                    <input form="addUser" type="text" name="last_name" class="form-control" />
+                                  </div>
+                                  <div class="form-group col-12 mb-3">
+                                    <label>Username</label>
+                                    <input form="addUser" type="text" name="username" class="form-control" />
+                                  </div>
+                                  <div class="form-group col-12 mb-3">
+                                    <label>Email</label>
+                                    <input form="addUser" type="email" name="email" class="form-control" />
+                                  </div>
+                                  <div class="form-group col-12 mb-3">
+                                    <label>Password</label>
+                                    <input form="addUser" type="password" name="password" class="form-control" />
+                                  </div>
+                                  <div class="form-group col-12 mb-3">
+                                    <label>Phone Number</label>
+                                    <input form="addUser" type="tel" name="phone" class="form-control" />
+                                  </div>
+                                  <div class="form-group col-12 mb-3">
+                                    <label>DOB</label>
+                                    <input form="addUser" type="date" name="dob" class="form-control" />
+                                  </div>
+                                  <div class="form-group col-12 mb-3">
+                                    <label>Address</label>
+                                    <textarea form="addUser" class="form-control" id="address" name="address"
+                                      rows="2"></textarea>
+                                  </div>
+                                  <div class="form-group col-12 mb-3">
+                                    <label>Gender</label><br />
+                                    <div class="form-check-inline">
+                                      <label class="form-check-label">
+                                        <input form="addUser" type="radio" class="form-check-input" name="gender"
+                                          value="Male" />Male
+                                      </label>
+                                    </div>
+                                    <div class="form-check-inline">
+                                      <label class="form-check-label">
+                                        <input form="addUser" type="radio" class="form-check-input" name="gender"
+                                          value="Female" />Female
+                                      </label>
+                                    </div>
+                                  </div>
+                                  <div class="form-group col-12 mb-3">
+                                    <label>Photo</label>
+                                    <input form="addUser" type="file" id="photo" name="photo" class="form-control" />
+                                  </div>
+                                  <button form="addUser" type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                              </div>
+                            </div>
+
+                            <!-- New User Form Collapse-->
+
+                            <div class="form-group col-12 mb-3">
+                              <label>Quantity</label>
+                              <input type="number" name="quantity" class="form-control" />
+                            </div>
+                            <div class="form-group col-12 mb-3">
+                              <label>Unit Cost</label>
+                              <input type="number" name="unit_cost" class="form-control" />
+                            </div>
+                            <div class="form-group col-12 mb-3">
+                              <label>Date</label>
+                              <input type="date" name="date" class="form-control" />
+                            </div>
+                            <div class="form-group col-12 mb-3">
+                              <label>Remarks</label>
+                              <textarea name="remark" id="remark" class="form-control" rows="2"></textarea>
+                            </div>
+                          </form>
+                          <form action="/add-user" method="post" id="addUser" enctype="multipart/form-data"></form>
+                        </div>
+                        <div class="modal-footer">
+                          <button form="damageItemForm" type="submit" class="btn btn-primary">
+                            Submit
+                          </button>
+                          <button type="button" class="btn btn-danger" data-dismiss="modal">
+                            Close
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Damaged item Table -->
+                  <div class="table-responsive ">
+                    <table class="table table-bordered table-muted" id="dataTable" width="100%" cellspacing="0">
+                      <thead>
+                        <tr>
+                          <th scope="col">Date</th>
+                          <th scope="col">Damaged by</th>
+                          <th scope="col">Quantity</th>
+                          <th scope="col">Unit Cost</th>
+                          <th scope="col">Total Cost</th>
+                        
+                          <th scope="col">Remarks</th>
+                          <th scope="col">Actions</th>
+                        </tr>
+                      </thead>
+
+                      <!-- <tbody>
+
+
+                        <% for( let damage of item.damages ) { %>
+                          <tr>
+
+                            <td scope="col">
+                              <%= damage.date?.toDateString() %>
+                            </td>
+                            <td scope="col">
+                              <%= damage.user %>
+                            </td>
+                            <td scope="col">
+                              <%= damage.quantity %>
+                            </td>
+                            <td scope="col">
+                              <%= damage.unit_cost %>
+                            </td>
+                            <td scope="col">
+                              <%= damage.total_cost %>
+                            </td>
+                       
+                            <td scope="col">
+                              <%= damage.remark %>
+                            </td>
+
+                            <td scope="col dropdown">
+                              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                              </button>
+                              <ul class="dropdown-menu">
+                                </li><a href="# " class="dropdown-item"><i class="fas fa-eye text-success"></i> Balance
+                                  Payment</a></li>
+
+                              </ul>
+                            </td>
+                          </tr>
+                          <% } %>
+
+                      </tbody> -->
+                    </table>
+                  </div>
+                  <!-- Damaged item Table -->
+                </div>
+              </div>
+            </div>
+            <!-- fourth child  -->
+
+            <!-- fifth child  -->
+            <div class="tab-pane container fade" id="consumptions">
+              <div class="col-12">
+                <div class="card-body">
+                  <div class="d-flex mb-4">
+                    <h5 class="text-primary font-weight-bold">
+                      <%= item.name %> Consumptions
+                    </h5>
+                    <button type="button" class="btn btn-secondary btn-icon-split my-2 ml-auto" data-toggle="modal"
+                      data-target="#consumedItem">
+                      <span class="icon text-white-50">
+                        <i class="fas fa-times-circle"></i>
+                      </span>
+                      <span class="text">Consumed Item</span>
+                    </button>
+                  </div>
+
+                  <div class="modal" id="consumedItem">
+                    <div class="modal-dialog modal-dialog-scrollable">
+                      <div class="modal-content">
+                        <div class="modal-header" id="modal-body">
+                          <h5 class="modal-title">
+                            Consumed <%= item.name %>
+                          </h5>
+                          <button type="button" class="close" data-dismiss="modal">
+                            &times;
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <form action="/add-consumption" method="post" id="consumeItemForm" class="row"
+                            enctype="multipart/form-data">
+                            <input type="hidden" name="item_id" class="form-control" value="<%= item.id %> " />
+                            <!-- Button to Open the Modal -->
+                            <div class="form-group col-12 mb-3">
+                              <label>User</label>
+                              <select name="user_id" class="form-control">
+                                <option value="">Select a custodian</option>
+                                <% for(let user of users ) { %>
+                                  <option value="<%= user.id %>">
+                                    <%= user %>
+                                  </option>
+                                  <% } %>
+                              </select>
+                              <!-- Button to Open the Collapse -->
+
+                              <button type="button" class="btn btn-success btn-icon-split my-2" data-toggle="collapse"
+                                data-target="#myConsumer">
+                                <span class="icon text-white-50">
+                                  <i class="fas fa-plus"></i>
+                                </span>
+                                <span class="text">New Consumer</span>
+                              </button>
+                              <!-- Button to Open the Collapse -->
+
+                              <!-- New User Form Collapse-->
+                              <div id="myConsumer" class="collapse my-3">
+                                <div class="card-body bg-light rounded">
+                                  <div class="form-group col-12 mb-3">
+                                    <label>First Name</label>
+                                    <input form="addConsumer" type="text" name="first_name" class="form-control" />
+                                  </div>
+                                  <div class="form-group col-12 mb-3">
+                                    <label>Last name</label>
+                                    <input form="addConsumer" type="text" name="last_name" class="form-control" />
+                                  </div>
+                                  <div class="form-group col-12 mb-3">
+                                    <label>Username</label>
+                                    <input form="addConsumer" type="text" name="username" class="form-control" />
+                                  </div>
+                                  <div class="form-group col-12 mb-3">
+                                    <label>Email</label>
+                                    <input form="addConsumer" type="email" name="email" class="form-control" />
+                                  </div>
+                                  <div class="form-group col-12 mb-3">
+                                    <label>Password</label>
+                                    <input form="addConsumer" type="password" name="password" class="form-control" />
+                                  </div>
+                                  <div class="form-group col-12 mb-3">
+                                    <label>Phone Number</label>
+                                    <input form="addConsumer" type="tel" name="phone" class="form-control" />
+                                  </div>
+                                  <div class="form-group col-12 mb-3">
+                                    <label>DOB</label>
+                                    <input form="addConsumer" type="date" name="dob" class="form-control" />
+                                  </div>
+                                  <div class="form-group col-12 mb-3">
+                                    <label>Address</label>
+                                    <textarea form="addConsumer" class="form-control" id="address" name="address"
+                                      rows="2"></textarea>
+                                  </div>
+                                  <div class="form-group col-12 mb-3">
+                                    <label>Gender</label><br />
+                                    <div class="form-check-inline">
+                                      <label class="form-check-label">
+                                        <input form="addConsumer" type="radio" class="form-check-input" name="gender"
+                                          value="Male" />Male
+                                      </label>
+                                    </div>
+                                    <div class="form-check-inline">
+                                      <label class="form-check-label">
+                                        <input form="addConsumer" type="radio" class="form-check-input" name="gender"
+                                          value="Female" />Female
+                                      </label>
+                                    </div>
+                                  </div>
+                                  <div class="form-group col-12 mb-3">
+                                    <label>Photo</label>
+                                    <input form="addConsumer" type="file" id="photo" name="photo"
+                                      class="form-control" />
+                                  </div>
+                                  <button form="addConsumer" type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                              </div>
+
+                              <!-- New User Form Collapse-->
+
+                            </div>
+
+                            <div class="form-group col-12 mb-3">
+                              <label>Quantity</label>
+                              <input type="number" name="quantity" class="form-control" />
+                            </div>
+                            <div class="form-group col-12 mb-3">
+                              <label>Unit Cost</label>
+                              <input type="number" name="unit_cost" class="form-control" />
+                            </div>
+                            <div class="form-group col-12 mb-3">
+                              <label>Date</label>
+                              <input type="date" name="date" class="form-control" />
+                            </div>
+                            <div class="form-group col-12 mb-3">
+                              <label>Remarks</label>
+                              <textarea name="remark" id="remark" class="form-control" rows="2"></textarea>
+                            </div>
+                          </form>
+                          <form action="/add-user" method="post" id="addConsumer" enctype="multipart/form-data"></form>
+                        </div>
+                        <div class="modal-footer">
+                          <button form="consumeItemForm" type="submit" class="btn btn-primary">
+                            Submit
+                          </button>
+                          <button type="button" class="btn btn-danger" data-dismiss="modal">
+                            Close
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Damaged item Table -->
+                  <div class="table-responsive ">
+                    <table class="table table-bordered table-muted" id="dataTable" width="100%" cellspacing="0">
+                      <thead>
+                        <tr>
+                          <th scope="col">Date</th>
+                          <th scope="col">Consumed by</th>
+                          <th scope="col">Quantity</th>
+                          <th scope="col">Unit Cost</th>
+                          <th scope="col">Total Cost</th>
+                         
+                          <th scope="col">Remarks</th>
+                          <th scope="col">Actions</th>
+                        </tr>
+                      </thead>
+
+                      <!-- <tbody>
+
+
+                        <% for( let consumption of item.consumptions ) { %>
+                          <tr>
+
+                            <td scope="col">
+                              <%= consumption.date?.toDateString() %>
+                            </td>
+                            <td scope="col">
+                              <%= consumption.user %>
+                            </td>
+                            <td scope="col">
+                              <%= consumption.quantity %>
+                            </td>
+                            <td scope="col">
+                              <%= consumption.unit_cost %>
+                            </td>
+                            <td scope="col">
+                              <%= consumption.total_cost %>
+                            </td>
+                 
+                            <td scope="col">
+                              <%= consumption.remark %>
+                            </td>
+
+                            <td scope="col dropdown">
+                              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                              </button>
+                              <ul class="dropdown-menu">
+                                </li><a href="# " class="dropdown-item"><i class="fas fa-eye text-success"></i> Balance
+                                  Payment</a></li>
+
+                              </ul>
+                            </td>
+                          </tr>
+                          <% } %>
+
+                      </tbody> -->
+                    </table>
+                  </div>
+                  <!-- Damaged item Table -->
+                </div>
+              </div>
+            </div>
+            <!-- fifth child  -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <%- include('includes/footer') %>

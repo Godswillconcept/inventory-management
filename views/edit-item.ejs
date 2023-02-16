@@ -1,0 +1,116 @@
+<%- include('./includes/header') %>
+  <div class="row">
+    <div class="col">
+      <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+        <ol class="breadcrumb mb-0">
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
+          <li class="breadcrumb-item"><a href="/items">Items</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Edit Item</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+  <div class="container mt-5">
+    <h1 class="my-3 text-dark">Update Item</h1>
+    <form action="" method="post" class="row my-5" enctype="multipart/form-data">
+      <div class="form-group col-md-12 col-lg-6 mb-3">
+        <label>Name</label>
+        <input type="text" value="<%= item.name %> " name="name" class="form-control" />
+      </div>
+      <div class="form-group col-md-12 col-lg-6 mb-3">
+        <label>Desciption</label>
+        <textarea class="form-control" id="address" name="description" rows="2">
+<%= item.description %></textarea>
+      </div>
+      <div class="form-group col-md-12 col-lg-6 mb-3">
+        <label>Brand</label>
+        <input type="text" value="<%= item.brand %> " name="brand" class="form-control" />
+      </div>
+      <div class="form-group col-md-12 col-lg-6 mb-3">
+        <label>Model</label>
+        <input type="text" value="<%= item.model %> " name="model" class="form-control" />
+      </div>
+      <div class="form-group col-md-12 col-lg-6 mb-3">
+        <label>Manufacturer</label>
+        <input type="text" value="<%= item.manufacturer %> " name="manufacturer" class="form-control" />
+      </div>
+      <div class="form-group col-md-12 col-lg-6 mb-3">
+        <label>Usage Mode</label><br />
+        <div class="form-check-inline">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="usage_mode" value="Sale" <%-
+              item.usage_mode?.toLowerCase()=='Sale' ? 'checked' : '' %> />Sale
+          </label>
+        </div>
+        <div class="form-check-inline">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="usage_mode" value="Lease" <%-
+              item.usage_mode?.toLowerCase()=='Lease' ? 'checked' : '' %> />Lease
+          </label>
+        </div>
+        <div class="form-check-inline">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="usage_mode" value="Use" <%-
+              item.usage_mode?.toLowerCase()=='Use' ? 'checked' : '' %> />Use
+          </label>
+        </div>
+        <div class="form-check-inline">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="usage_mode" value="Consumption" <%-
+              item.usage_mode?.toLowerCase()=='Consumption' ? 'checked' : '' %> />Consumption
+          </label>
+        </div>
+      </div>
+      <div class="form-group col-md-12 col-lg-6 mb-3">
+        <label>Cost Price</label>
+        <input type="text" value="<%= item.cost_price %> " name="cost_price" class="form-control" />
+      </div>
+      <div class="form-group col-md-12 col-lg-6 mb-3">
+        <label>Useful Life</label>
+        <input type="text" value="<%= item.useful_life %> " name="useful_life" class="form-control" />
+      </div>
+      <div class="form-group col-md-12 col-lg-6 mb-3">
+        <label>Manufacture Date</label>
+        <input type="date" value="<%= item.manufacture_date %> " name="manufacture_date" class="form-control" />
+      </div>
+      <div class="form-group col-md-12 col-lg-6 mb-3">
+        <label>Procurement Date</label>
+        <input type="date" value="<%= item.procurement_date %> " name="procurement_date" class="form-control" />
+      </div>
+      <div class="form-group col-md-12 col-lg-6 mb-3">
+        <label>Color</label>
+        <input type="color" value="<%= item.color %> " name="color" class="form-control" />
+      </div>
+      <div class="form-group col-md-12 col-lg-6 mb-3">
+        <label>Serial Number</label>
+        <input type="text" value="<%= item.serial_number %> " name="serial_number" class="form-control" />
+      </div>
+      <div class="form-group col-md-12 col-lg-6 mb-3">
+        <label>Type</label><br />
+        <div class="form-check-inline">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="type" <%- item.type?.toLowerCase()=='Fixed' ? 'checked'
+              : '' %> value="Fixed"
+            />Fixed
+          </label>
+        </div>
+        <div class="form-check-inline">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="type" <%- item.type?.toLowerCase()=='Suppliable'
+              ? 'checked' : '' %>
+            value="Suppliable" />Suppliable
+          </label>
+        </div>
+      </div>
+      <div class="form-group col-md-12 col-lg-6 mb-3">
+        <label>Price</label>
+        <input type="number" id="number" value="<%= item.price %> " name="price" class="form-control" />
+      </div>
+      <div class="form-group col-md-12 col-lg-6 mb-3">
+        <label>Photo</label>
+        <input type="file" id="photo" value="<%= item.photo %> " name="photo" class="form-control" />
+      </div>
+      <button type="submit" class="btn btn-primary col-12">Submit</button>
+    </form>
+  </div>
+  <%- include('./includes/footer') %>

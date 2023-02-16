@@ -1,0 +1,307 @@
+</div>
+<!-- End of Main Content -->
+<!-- Footer -->
+<footer class="sticky-footer bg-white">
+  <div class="container my-auto">
+    <div class="copyright text-center my-auto">
+      <span>Copyright &copy; Godswill concept 2022</span>
+    </div>
+  </div>
+</footer>
+<!-- End of Footer -->
+
+</div>
+<!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+  <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+        <a class="btn btn-primary" href="login.html">Logout</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap core JavaScript-->
+<script src="/vendor/jquery/jquery.min.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+<!-- Core plugin JavaScript-->
+<script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/js/sb-admin-2.min.js"></script>
+
+<!-- Page level plugins -->
+<script src="/vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+
+<!-- Page level custom scripts -->
+<script src="/js/demo/datatables-demo.js"></script>
+
+<!-- Page level plugins -->
+<!-- <script src="/vendor/chart.js/Chart.min.js"></script> -->
+
+<!-- Page level custom scripts -->
+<!-- <script src="/js/demo/chart-area-demo.js"></script>
+<script src="/js/demo/chart-pie-demo.js"></script> -->
+
+
+<script>
+ 
+
+
+
+
+  $(function () {
+    var items = [];
+    var itemTable = $('#itemTable tbody');
+    var userView = $('#userView');
+    $("#quantity, #cost").on("input", function () {
+      var quantity = $("#quantity").val();
+      var selling_price = $("#selling_price").val();
+      var total_cost = (quantity * selling_price);
+      $("#total_cost").val(total_cost);
+    });
+    var currentDate = new Date();
+    $('#date').val(currentDate)
+    $('#addItemBtn').click(function () {
+      $('#itemContainer').show();
+      var item = $('#item_id option:selected').html();
+      var item_id = $('#item_id option:selected').val();
+      var quantity = $('#quantity').val();
+      var remark = $('#remark').val();
+      var selling_price = $('#selling_price').val();
+      var total_cost = $('#total_cost').val();
+
+      //add items to item array
+      items.push({ item, quantity, selling_price, total_cost, remark });
+      console.log(items);
+      //appending items to the table
+      itemTable.append(`
+        <tr>
+          <td>${item}<input type="hidden" name="item_id" value="${item_id}" form="add-sale"></td>  
+          <td>${quantity}<input type="hidden" name="quantity" value="${quantity}" form="add-sale"></td>  
+          <td>${selling_price}<input type="hidden" name="selling_price" value="${selling_price}" form="add-sale"></td>  
+          <td class="total_cost">${total_cost}<input type="hidden" name="total_cost" value="${total_cost}" form="add-sale"></td>  
+          <td>${remark}<input type="hidden" name="remark" value="${remark}" form="add-sale"></td>  
+        </tr>
+      `);
+      // calculating the totals
+      var total = 0;
+      $('.total_cost').each(function (e, elem) {
+        total += Number($(elem).text())
+      })
+      $('#total').text('').append(total)
+      $('#totalVal').val(total)
+
+
+      //clearing form input
+      $('#item').val("");
+      $('#quantity').val("");
+      $('#selling_price').val("");
+      $('#total_cost').val("");
+      $('#remark').val("");
+      $('#item_id option:first').prop('selected', true);
+
+
+
+
+    });
+
+
+
+    //setPrice modal form
+    if ($('#priceForm').length > 0) {
+      $('#priceForm').submit(function (e) {
+        e.preventDefault();
+        var selling_price = $('#selling_price').val();
+        var item_id = $("#item_id").val()
+        console.log('selling_price = ', selling_price, 'item_id = ', item_id);
+        $.ajax({
+          type: 'POST',
+          url: '/item/:id/price',
+          data: { selling_price: selling_price, item_id: item_id },
+          success: function (response) {
+            console.log(response);
+            console.log("Price updated successfully");
+            $('#setPrice').modal('hide');
+          }
+        })
+      })
+    }
+
+    // Item Form start
+
+    // Item Form end
+
+    // Vendor Form start
+    if ($("#vendorForm").length > 0) {
+
+      $("#vendorForm").submit(function (e) {
+        e.preventDefault();
+        formData = new FormData(this);
+
+        $.ajax({
+          type: "POST",
+          url: "add-vendor",
+          data: formData,
+          processData: false, //Don't process the file
+          contentType: false, //Set the content type to multipart/form-data
+          success: function (vendor) {
+
+            $('select[name="vendor_id"]').append('<option value="' + vendor.id + '">' + vendor.name + '</option>')
+            $('select[name="vendor_id"] option[value=' + vendor.id + ']').attr('selected', true)
+            $('#myVendor').modal('hide');
+          }
+        });
+      });
+    }
+    // Vendor Form end
+
+
+    // Handle adding vendor from item supply form
+    if ($("#addVendor").length > 0) {
+      $("#addVendor").submit(function (e) {
+        e.preventDefault();
+        formData = new FormData(this);
+        $.ajax({
+          type: "POST",
+          url: "/add-vendor",
+          data: formData,
+          processData: false, //Don't process the file
+          contentType: false, //Set the content type to multipart/form-data
+          success: function (vendor) {
+            $('select[name="vendor_id"]').append('<option value="' + vendor.id + '">' + vendor.name + '</option>')
+            $('select[name="vendor_id"] option[value=' + vendor.id + ']').attr('selected', true)
+            $('#myVendor').collapse('hide');
+          }
+        });
+      });
+    }
+
+
+
+    // Handle adding user from item damage form
+
+    if ($("#addUser").length > 0) {
+      $("#addUser").submit(function (e) {
+        e.preventDefault();
+        formData = new FormData(this);
+        $.ajax({
+          type: "POST",
+          url: "/add-user",
+          data: formData,
+          processData: false, //Don't process the file
+          contentType: false, //Set the content type to multipart/form-data
+          success: function (user) {
+            $('select[name="user_id"]').append('<option value="' + user.id + '">' + user.first_name + ' ' + user.last_name + '</option>')
+            $('select[name="user_id"] option[value=' + user.id + ']').attr('selected', true)
+            $('#myUser').collapse('hide');
+          }
+        });
+      });
+    }
+
+    // Handle adding consumer from item consumption form
+
+    if ($("#addConsumer").length > 0) {
+      $("#addConsumer").submit(function (e) {
+        e.preventDefault();
+        formData = new FormData(this);
+        $.ajax({
+          type: "POST",
+          url: "/add-user",
+          data: formData,
+          processData: false, //Don't process the file
+          contentType: false, //Set the content type to multipart/form-data
+          success: function (user) {
+            $('select[name="user_id"]').append('<option value="' + user.id + '">' + user.first_name + ' ' + user.last_name + '</option>')
+            $('select[name="user_id"] option[value=' + user.id + ']').attr('selected', true)
+            $('#myConsumer').collapse('hide');
+
+          }
+        });
+
+      });
+    }
+
+
+    // Handle adding buyer from item sale form
+
+    if ($("#addBuyer").length > 0) {
+      $("#addBuyer").submit(function (e) {
+        e.preventDefault();
+        formData = new FormData(this);
+        $.ajax({
+          type: "POST",
+          url: "/add-user",
+          data: formData,
+          processData: false, //Don't process the file
+          contentType: false, //Set the content type to multipart/form-data
+          success: function (user) {
+            $('select[name="user_id"]').append('<option value="' + user.id + '">' + user.first_name + ' ' + user.last_name + '</option>')
+            $('select[name="user_id"] option[value=' + user.id + ']').attr('selected', true)
+            $('#myBuyer').collapse('hide');
+
+          }
+        });
+
+      });
+    }
+
+
+    // Handle adding consumer from item damage form
+
+    if ($("#addConsumer").length > 0) {
+      $("#addConsumer").submit(function (e) {
+        e.preventDefault();
+        formData = new FormData(this);
+        $.ajax({
+          type: "POST",
+          url: "/add-user",
+          data: formData,
+          processData: false, //Don't process the file
+          contentType: false, //Set the content type to multipart/form-data
+          success: function (user) {
+            $('select[name="user_id"]').append('<option value="' + user.id + '">' + user.first_name + ' ' + user.last_name + '</option>')
+            $('select[name="user_id"] option[value=' + user.id + ']').attr('selected', true)
+            $('#myConsumer').collapse('hide');
+
+          }
+        });
+
+      });
+    }
+
+
+
+
+
+  });
+</script>
+
+</body>
+
+</html>

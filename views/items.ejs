@@ -1,0 +1,104 @@
+<%- include('includes/header') %>
+  <div class="row">
+    <div class="col">
+      <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+        <ol class="breadcrumb mb-0">
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
+          <li class="breadcrumb-item"><a href="/items">Items</a></li>
+          <li class="breadcrumb-item active" aria-current="page">All</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <div class="d-flex">
+        <h6 class=" p-2 m-0 font-weight-bold text-primary">Available Items</h6>
+        <a href="/add-item" class="btn btn-primary float-right ml-auto btn-icon-split">
+          <span class="icon text-white-50">
+            <i class="fas fa-plus"></i>
+          </span>
+          <span class="text">New Item</span>
+        </a>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive ">
+        <table class="table table-bordered table-sm table-hovered" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Description</th>
+              <th scope="col">Manufacturer</th>
+              <th scope="col">Usage mode</th>
+              <th scope="col">Cost price</th>
+              <th scope="col">Type</th>
+              <th scope="col">Manufacture date</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% for( let item of items ) { %>
+
+              <tr>
+                <td scope="col">
+                  <img src="/items/<%- item.photo %>" width="30" />
+                </td>
+                <td scope="col"><%- item.name %></td>
+                <td scope="col"><%- item.description %></td>
+                <td scope="col"><%- item.manufacturer %></td>
+                <td scope="col"><%- item.usage_mode %></td>
+                <td scope="col"><%- item.cost_price %></td>
+
+                <td scope="col"><%- item.type %></td>
+                <td scope="col"><%- item.manufacture_date.toDateString() %></td>
+                <td scope="col dropdown">
+                  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a href="/item/<%- item.id %>/delete " class="dropdown-item"><i
+                          class="fas fa-trash text-danger"></i> Delete</a></li>
+                    </li><a href="/item/<%- item.id %>/details " class="dropdown-item"><i
+                        class="fas fa-eye text-success"></i> Details</a></li>
+                    <% if (item.usage_mode=='Sale' ) { %>
+                      <li><button type="button" class="dropdown-item" data-toggle="modal" data-target="#setPrice"
+                          onclick=" $('#item_id').val('<%- item.id %>')"><i class="fas fa-money-bill text-primary"></i>
+                          Set Price</button></li>
+                      <% } %>
+                  </ul>
+                </td>
+              </tr>
+              <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="setPrice">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Set Selling Price</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+
+          <form method="post" action="" id="priceForm">
+            <div class="form-group">
+              <label for="selling_price">Selling Price</label>
+              <input type="number" name="selling_price" class="form-control" id="selling_price">
+              <input type="hidden" name="item_id" id="item_id">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" form="priceForm" class="btn btn-primary" id="setPriceBtn">Submit</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+    <%- include('includes/footer') %>
