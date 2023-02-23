@@ -6,7 +6,7 @@ const {
   saveDonation,
   editDonation,
   updateDonation,
-  deleteDonation,
+  getDonationsFromGroup
 } = require("../controllers/donationController");
 
 // donation routes
@@ -15,6 +15,6 @@ router.get("/add-donation", addDonation);
 router.post("/add-donation", saveDonation);
 router.get("/donation/:id/update", editDonation);
 router.post("/donation/:id/update", updateDonation);
-router.get("/donation/:id/delete", deleteDonation);
+router.get("/get-donations-from-group/:group_id", getDonationsFromGroup);
 
 module.exports = router;

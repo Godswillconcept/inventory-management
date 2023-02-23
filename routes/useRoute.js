@@ -6,7 +6,7 @@ const {
   saveUse,
   editUse,
   updateUse,
-  getItemFromGroup
+  getUsesFromGroup
 } = require("../controllers/useController");
 
 // use routes
@@ -15,6 +15,6 @@ router.get("/add-use", addUse);
 router.post("/add-use", saveUse);
 router.get("/use/:id/update", editUse);
 router.post("/use/:id/update", updateUse);
-router.get("/get-items-from-group/:group_id", getItemFromGroup);
+router.get("/get-uses-from-group/:group_id", getUsesFromGroup);
 
 module.exports = router;

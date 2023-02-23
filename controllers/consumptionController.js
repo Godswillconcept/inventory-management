@@ -8,12 +8,15 @@ let getConsumptions = async (req, res) => {
   try {
     let consumption_groups = await ConsumptionGroup.find();
     for (const consumption_group of consumption_groups) {
-      consumption_group.buyer = await consumption_group.getUser();
-      consumption_group.consumptions = await consumption_group.getConsumptions();
+      consumption_group.consumer = await consumption_group.getUser();
+      consumption_group.consumptions =
+        await consumption_group.getConsumptions();
       consumption_group.consumptions_description = [];
       for (const consumption of consumption_group.consumptions) {
         consumption_group.consumptions_description.push(
-          ` ${(await consumption.getItem()).name} (${consumption.quantity} unit)`
+          ` ${(await consumption.getItem()).name} (${
+            consumption.quantity
+          } unit)`
         );
         consumption_group.consumptions_description.join(", ");
       }
@@ -26,7 +29,7 @@ let getConsumptions = async (req, res) => {
 };
 
 let addConsumption = async (req, res) => {
-  let items = await Item.find(["usage_mode", "Use"]);
+  let items = await Item.find(["usage_mode", "Consumption"]);
   let users = await User.find();
   res.render("add-consumption", { addConsumption, items, users });
 };
@@ -40,13 +43,10 @@ let editConsumption = async (req, res) => {
 };
 
 let saveConsumption = async (req, res) => {
-  let { user_id, item_id, quantity, unit_cost, total_cost, remark, date } =
-    req.body;
+  let { user_id, item_id, quantity, remark, date } = req.body;
   if (!Array.isArray(item_id)) {
     item_id = [item_id];
     quantity = [quantity];
-    unit_cost = [unit_cost];
-    total_cost = [total_cost];
     remark = [remark];
   }
   try {
@@ -54,14 +54,13 @@ let saveConsumption = async (req, res) => {
     let consumptions = [];
     for (let i = 0; i < item_id.length; i++) {
       let item = await Item.findById(item_id[i]);
-      let selling_price = item.selling_price;
+      let selling_price = item.cost_price;
       let totalItemPrice = selling_price * quantity[i];
       consumptions.push(
         new Consumption({
           item_id: item.id,
           quantity: quantity[i],
           selling_price,
-          total_cost: totalItemPrice,
           remark: remark[i],
           date,
         })
@@ -102,13 +101,13 @@ let deleteConsumption = async (req, res) => {
   res.redirect("/consumptions");
 };
 
-let getItemFromGroup = async (req, res) => {
+let getConsumptionsFromGroup = async (req, res) => {
   let { group_id } = req.params;
-  let itemsOuts = await ItemOut.find(["group_id", group_id]);
-  for (const itemOut of itemsOuts) {
+  let ItemsOuts = await ItemOut.find(["group_id", group_id]);
+  for (const itemOut of ItemsOuts) {
     itemOut.item = await Item.findById(itemOut.item_id);
   }
-  res.json(itemsOuts);
+  res.json(ItemsOuts);
 };
 module.exports = {
   getConsumptions,
@@ -117,5 +116,5 @@ module.exports = {
   editConsumption,
   updateConsumption,
   deleteConsumption,
-  getItemFromGroup
+  getConsumptionsFromGroup,
 };

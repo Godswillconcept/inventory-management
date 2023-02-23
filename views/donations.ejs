@@ -1,86 +1,133 @@
 <%- include('includes/header') %>
-<div class="row">
-  <div class="col">
-    <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
-      <ol class="breadcrumb mb-0">
-        <li class="breadcrumb-item"><a href="/">Home</a></li>
-        <li class="breadcrumb-item"><a href="/donations">Donations</a></li>
-        <li class="breadcrumb-item active" aria-current="page">All</li>
-      </ol>
-    </nav>
-  </div>
-</div>
-<div class="card shadow mb-4">
-  <div class="card-header py-3">
-    <div class="d-flex">
-      <h6 class=" p-2 m-0 font-weight-bold text-primary">Available Donations</h6>
-      <a href="/add-donation"
-      class="btn btn-primary float-right ml-auto btn-icon-split"
-      >
-        <span class="icon text-white-50">
-          <i class="fas fa-plus"></i>
-        </span>
-        <span class="text">New Donation</span>
-      </a>
+  <div class="row">
+    <div class="col">
+      <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+        <ol class="breadcrumb mb-0">
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
+          <li class="breadcrumb-item"><a href="/donations">Donations</a></li>
+          <li class="breadcrumb-item active" aria-current="page">All</li>
+        </ol>
+      </nav>
     </div>
   </div>
-  <div class="card-body">
-    <div class="table-responsive">
-      <table
-        class="table table-bordered"
-        id="dataTable"
-        width="100%"
-        cellspacing="0"
-      >
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Item</th>
-            <th scope="col">Vendor</th>
-            <th scope="col">Quantity</th>
-            <th scope="col">Unit Cost</th>
-            <th scope="col">Date</th>
-            <th scope="col">Remarks</th>
-            <th scope="col">Actions</th>
-          </tr>
-        </thead>
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <div class="d-flex">
+        <h6 class=" p-2 m-0 font-weight-bold text-primary">Available Donations</h6>
+        <a href="/add-donation" class="btn btn-primary float-right ml-auto btn-icon-split">
+          <span class="icon text-white-50">
+            <i class="fas fa-plus"></i>
+          </span>
+          <span class="text">New Donation</span>
+        </a>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered table-sm" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th scope="col">Donated by</th>
+              <th scope="col">Item(s)</th>
+              <th scope="col">Total amount</th>
+              <th scope="col">Date-time</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
 
-        <tbody>
-          <% for( let donation of donations ) { %>
-
-          <tr>
-            <td scope="col">
-              <%- donation.id %> 
-            </td>
-            <td scope="col"><%- donation.item %></td>
-            <td scope="col"><%- donation.vendor %></td>
-            <td scope="col"><%- donation.quantity %></td>
-            <td scope="col"><%- donation.unit_cost %></td>
-            <td scope="col"><%- donation.date.toDateString() %></td>
-            <td scope="col"><%- donation.remark %></td>
-            <td scope="col dropdown">
-              <button
-                type="button"
-                class="btn btn-primary dropdown-toggle"
-                data-toggle="dropdown"
-              >
-              </button>
-              <ul class="dropdown-menu">
-                <li><a href="/donation/<%- donation.id %>/delete " class="dropdown-item"
-                  ><i class="fas fa-trash text-danger"></i
-                > Delete</a></li>
-              </li><a href="/donation/<%- donation.id %>/details " class="dropdown-item"
-                  ><i class="fas fa-eye text-success"></i
-                > Details</a></li>
-                
-              </ul>
-            </td>
-          </tr>
-          <% } %>
-        </tbody>
-      </table>
+          <tbody>
+            <% for( let donation of donation_groups ) { %>
+              <tr>
+                <td scope="col"><%- donation.donor %></td>
+                <td scope="col"><%- donation.donations_description %></td>
+                <td scope="col"><%- donation.total_amount %></td>
+                <td scope="col"><%- `${donation.date?.toDateString()} (${donation.date?.toLocaleString().split(", ").pop()})` %></td>
+                <td scope=" col dropdown">
+                    <button class="btn btn-sm btn-outline-success" data-target="#donationDetail" data-toggle="modal"
+                      onclick="getDonationsFromGroup('<%- donation.id %>', '<%- donation.donor %>')"><i class="fas fa-bars"></i></button>
+                </td>
+              </tr>
+              <% } %>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
-</div>
+  <div class="modal" id="donationDetail">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+           <span id="donor"></span>'s Transaction History
+          </h5>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="table-responsive my-2">
+            <table class="table table-sm table-hovered donation_detail" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th scope="col">S/N</th>
+                  <th scope="col">Item</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Amount paid</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
 
-<%- include('includes/footer') %>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th scope="col" colspan="3">Total</th>
+                  <th scope="col" colspan="2" id="total">Amount paid</th>
+                </tr>
+              </tfoot>
+
+
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    function getDonationsFromGroup(group_id, donor) {
+      console.log("donor = ", donor);
+      $('#donor').html(donor)
+      $.ajax({
+        type: 'GET',
+        url: '/get-donations-from-group/' + group_id,
+        success: function (itemOuts) {
+          console.log('itemOuts = ', itemOuts);
+          let total = 0
+          let tbodyString = ''
+          for (let i = 0; i < itemOuts.length; i++) {
+            const element = itemOuts[i];
+            let total_cost = itemOuts[i].quantity * itemOuts[i].price
+            tbodyString += `<tr>
+              <td>${i + 1}</td>
+              <td>${itemOuts[i].item.name}</td>
+              <td>${itemOuts[i].quantity} unit(s)</td>
+              <td>${total_cost}</td>
+              <td></td>
+            </tr>`;
+            total += Number(total_cost);
+            console.log(total);
+          }
+          $(".donation_detail tbody").html(tbodyString);
+          $('#total').text('').append(total);
+        }
+      });
+
+    }
+
+
+
+  </script>
+  <%- include('includes/footer') %>

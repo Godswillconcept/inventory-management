@@ -23,9 +23,9 @@
     </select>
     </div>
     <div class="form-group col-md-12 col-lg-6 mb-3">
-        <label>Vendor</label>
+        <label>Donated by</label>
         <select name="vendor_id" class="form-control">
-          <option value="">Select an vendor</option>
+          <option value="">Select a donor</option>
           <% for(let vendor of vendors ) { %>
               <option value="<%= vendor.id %>"><%= vendor %></option>                    
           <% } %>
@@ -36,8 +36,8 @@
       <input type="number" name="quantity" value="<%= donation.quantity %>" class="form-control" />
     </div>
     <div class="form-group col-md-12 col-lg-6 mb-3">
-      <label>Unit Cost</label>
-      <input type="number" name="unit_cost" value="<%= donation.unit_cost %>" class="form-control" />
+      <label>Price</label>
+      <input type="number" name="price" value="<%= donation.price %>" class="form-control" />
     </div>
     <div class="form-group col-md-12 col-lg-6 mb-3">
       <label>Date</label>

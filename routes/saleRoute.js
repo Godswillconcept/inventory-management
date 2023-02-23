@@ -6,7 +6,7 @@ const {
   saveSale,
   editSale,
   updateSale,
-  getItemFromGroup
+  getSalesFromGroup
 } = require("../controllers/saleController");
 
 // sale routes
@@ -15,6 +15,6 @@ router.get("/add-sale", addSale);
 router.post("/add-sale", saveSale);
 router.get("/sale/:id/update", editSale);
 router.post("/sale/:id/update", updateSale);
-router.get("/get-items-from-group/:group_id", getItemFromGroup);
+router.get("/get-sales-from-group/:group_id", getSalesFromGroup);
 
 module.exports = router;

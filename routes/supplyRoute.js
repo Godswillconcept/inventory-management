@@ -6,7 +6,7 @@ const {
   saveSupply,
   editSupply,
   updateSupply,
-  deleteSupply,
+  getSuppliesFromGroup
 } = require("../controllers/supplyController");
 
 // supply routes
@@ -15,6 +15,6 @@ router.get("/add-supply", addSupply);
 router.post("/add-supply", saveSupply);
 router.get("/supply/:id/update", editSupply);
 router.post("/supply/:id/update", updateSupply);
-router.get("/supply/:id/delete", deleteSupply);
+router.get("/get-supplies-from-group/:group_id", getSuppliesFromGroup);
 
 module.exports = router;

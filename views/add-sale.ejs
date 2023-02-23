@@ -12,9 +12,7 @@
   </div>
   <div class="container mt-5">
     <h1 class="my-3 text-dark">Add Sale</h1>
-
     <form action="" method="post" id="add-sale" class="row my-5" enctype="multipart/form-data">
-
       <div class="form-group col-md-12 col-lg-6 mb-3">
         <label>Buyer</label>
         <select name="user_id" id="user_id" class="form-control">
@@ -25,7 +23,6 @@
             </option>
             <% } %>
         </select>
-
         <button type="button" class="btn btn-primary btn-icon-split my-2" data-toggle="modal" data-target="#myUser">
           <span class="icon text-white-50">
             <i class="fas fa-plus"></i>
@@ -51,7 +48,7 @@
         </button>
 
         <!-- itemForm modal  -->
-        <div class="modal" id="myItem">
+        <!-- <div class="modal" id="myItem">
           <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
 
@@ -161,24 +158,22 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
         <!-- itemForm modal  -->
       </div>
 
       <div class='form-group col-6'><label for="quantity">Quantity:</label>
         <input class="form-control" type="number" id="quantity" name="quantity">
       </div>
-      <div class='form-group col-3'><label for="selling_price">Selling Price:</label>
-        <input class="form-control" type="number" id="selling_price" readonly name="selling_price">
-      </div>
-      <div class='form-group col-3'><label for="total_cost">Total amount:</label>
+      <input class="form-control" type="hidden" id="selling_price" name="selling_price">
+      <div class='form-group col-6'><label for="total_cost">Total amount:</label>
         <input class="form-control" type="number" id="total_cost" name="total_cost">
       </div>
       <div class='form-group col-6'><label for="date">Date:</label>
-        <input class="form-control" type="date" id="date" name="date">
+        <input class="form-control" type="datetime-local" id="date" name="date">
       </div>
       <div class='form-group col-6'><label for="remark">Remark:</label>
-        <textarea name="remark" class="form-control" id="remark" cols="1" rows="3"></textarea>
+        <textarea name="remark" class="form-control" id="sale_remark" cols="1" rows="3"></textarea>
       </div>
       <button type="button" class="btn btn-secondary my-2 mr-1" id="addItemBtn">Add New Item</button>
       <div class="container my-5" id="itemContainer" style="display: none;">
@@ -208,136 +203,145 @@
       <input type="submit" class="btn btn-primary my-2" value="Submit" id="submitBtn">
     </form>
 
-    <form class="my-5 form" id="userForm">
-      <div class="modal" id="myUser">
-        <div class="modal-dialog modal-dialog-scrollable">
-          <div class="modal-content">
-            <div class="modal-header" id="modal-body">
-              <h4 class="modal-title">Add New User</h4>
-              <button type="button" class="close" data-dismiss="modal">
-                &times;
-              </button>
-            </div>
-            <div class="modal-body">
-              <div class="form-group col-12 mb-3">
-                <label>First Name</label>
-                <input type="text" name="first_name" class="form-control" />
-              </div>
-              <div class="form-group col-12 mb-3">
-                <label>Last name</label>
-                <input type="text" name="last_name" class="form-control" />
-              </div>
-              <div class="form-group col-12 mb-3">
-                <label>Username</label>
-                <input type="text" name="username" class="form-control" />
-              </div>
-              <div class="form-group col-12 mb-3">
-                <label>Email</label>
-                <input type="email" name="email" class="form-control" />
-              </div>
-              <div class="form-group col-12 mb-3">
-                <label>Password</label>
-                <input type="password" name="password" class="form-control" />
-              </div>
-              <div class="form-group col-12 mb-3">
-                <label>Phone Number</label>
-                <input type="tel" name="phone" class="form-control" />
-              </div>
-              <div class="form-group col-12 mb-3">
-                <label>DOB</label>
-                <input type="date" name="dob" class="form-control" />
-              </div>
-              <div class="form-group col-12 mb-3">
-                <label>Address</label>
-                <textarea class="form-control" id="address" name="address" rows="2"></textarea>
-              </div>
-              <div class="form-group col-12 mb-3">
-                <label>Gender</label><br />
-                <div class="form-check-inline">
-                  <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="gender" value="Male" />Male
-                  </label>
-                </div>
-                <div class="form-check-inline">
-                  <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="gender" value="Female" />Female
-                  </label>
-                </div>
-              </div>
-              <div class="form-group col-12 mb-3">
-                <label>Photo</label>
-                <input type="file" id="photo" name="photo" class="form-control" />
-              </div>
-              <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">
-                  Submit
+
+    <!-- <form class="my-5 form" id="userForm">
+        <div class="modal" id="myUser">
+          <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+              <div class="modal-header" id="modal-body">
+                <h4 class="modal-title">Add New User</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                  &times;
                 </button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">
-                  Close
-                </button>
+              </div>
+              <div class="modal-body">
+                <div class="form-group col-12 mb-3">
+                  <label>First Name</label>
+                  <input type="text" name="first_name" class="form-control" />
+                </div>
+                <div class="form-group col-12 mb-3">
+                  <label>Last name</label>
+                  <input type="text" name="last_name" class="form-control" />
+                </div>
+                <div class="form-group col-12 mb-3">
+                  <label>Username</label>
+                  <input type="text" name="username" class="form-control" />
+                </div>
+                <div class="form-group col-12 mb-3">
+                  <label>Email</label>
+                  <input type="email" name="email" class="form-control" />
+                </div>
+                <div class="form-group col-12 mb-3">
+                  <label>Password</label>
+                  <input type="password" name="password" class="form-control" />
+                </div>
+                <div class="form-group col-12 mb-3">
+                  <label>Phone Number</label>
+                  <input type="tel" name="phone" class="form-control" />
+                </div>
+                <div class="form-group col-12 mb-3">
+                  <label>DOB</label>
+                  <input type="date" name="dob" class="form-control" />
+                </div>
+                <div class="form-group col-12 mb-3">
+                  <label>Address</label>
+                  <textarea class="form-control" id="address" name="address" rows="2"></textarea>
+                </div>
+                <div class="form-group col-12 mb-3">
+                  <label>Gender</label><br />
+                  <div class="form-check-inline">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" name="gender" value="Male" />Male
+                    </label>
+                  </div>
+                  <div class="form-check-inline">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" name="gender" value="Female" />Female
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group col-12 mb-3">
+                  <label>Photo</label>
+                  <input type="file" id="photo" name="photo" class="form-control" />
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary">
+                    Submit
+                  </button>
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">
+                    Close
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-    </form>
-
-
-    <form method="post" id="itemForm"></form>
+      </form> -->
 
 
   </div>
   <%- include('./includes/footer') %>
-    <script>
-      // setting price based on the selected item 
-      $('#item_id').change(function (e) {
-        var cost = $(e.target).find('option:selected').data('selling_price');
-        $('#selling_price').val(cost);
-      });
-
-
-      $(function () {
-        $("#userForm").submit(function (e) {
-          e.preventDefault();
-          formData = new FormData(this);
-          $.ajax({
-            type: "POST",
-            url: "/add-user",
-            data: formData,
-            processData: false, //Don't process the file
-            contentType: false, //Set the content type to multipart/form-data
-            success: function (user) {
-
-              $('select[name="user_id"]').append('<option value="' + user.id + '">' + user.first_name + ' ' + user.last_name + '</option>')
-              $('select[name="user_id"] option[value=' + user.id + ']').attr('selected', true)
-              $('#myUser').modal('hide');
-            }
+    <%- include('./includes/ajax-user') %>
+      <%- include('./includes/ajax-item') %>
+        <script>
+          // setting price based on the selected item 
+          $('#item_id').change(function (e) {
+            var cost = $(e.target).find('option:selected').data('selling_price');
+            $('#selling_price').val(cost);
+            $('#selling_price').trigger("input");
           });
-        });
-      })
-
-      if ($('#itemForm').length > 0) {
-        console.log('Itemform present');
-      }
-
-      $("#itemForm").submit(function (e) {
-        e.preventDefault();
-        formData = new FormData(this);
-        console.log('formData =', formData);
-
-        $.ajax({
-          type: "POST",
-          url: "add-item",
-          data: formData,
-          processData: false, //Don't process the file
-          contentType: false, //Set the content type to multipart/form-data
-          success: function (item) {
-
-            $('select[name="item_id"]').append('<option value="' + item.id + '">' + item.name + '</option>')
-            $('select[name="item_id"] option[value=' + item.id + ']').attr('selected', true)
-            $('#myItem').modal('hide');
-          }
-        });
-      });
 
 
-    </script>
+          var items = [];
+          var itemTable = $('#itemTable tbody');
+          var userView = $('#userView');
+          $("#quantity, #selling_price").on("input", function () {
+            var quantity = $("#quantity").val();
+            var selling_price = $("#selling_price").val();
+            var total_cost = (quantity * selling_price);
+            $("#total_cost").val(total_cost);
+          });
+          var currentDate = new Date();
+          $('#date').val(currentDate)
+          $('#addItemBtn').click(function () {
+            $('#itemContainer').show();
+            var item = $('#item_id option:selected').html();
+            var item_id = $('#item_id option:selected').val();
+            var quantity = $('#quantity').val();
+            var remark = $('#remark').val();
+            var selling_price = $('#selling_price').val();
+            var total_cost = $('#total_cost').val();
+
+            //add items to item array
+            items.push({ item, quantity, selling_price, total_cost, remark });
+            console.log(items);
+            //appending items to the table
+            itemTable.append(`
+          <tr>
+            <td>${item}<input type="hidden" name="item_id" value="${item_id}" form="add-sale"></td>  
+            <td>${quantity}<input type="hidden" name="quantity" value="${quantity}" form="add-sale"></td>  
+            <td>${selling_price}<input type="hidden" name="selling_price" value="${selling_price}" form="add-sale"></td>  
+            <td class="total_cost">${total_cost}<input type="hidden" name="total_cost" value="${total_cost}" form="add-sale"></td>  
+            <td>${remark}<input type="hidden" name="remark" value="${remark}" form="add-sale"></td>  
+          </tr>
+        `);
+            // calculating the totals
+            var total = 0;
+            $('.total_cost').each(function (e, elem) {
+              total += Number($(elem).text())
+            })
+            $('#total').text('').append(total)
+            $('#totalVal').val(total)
+
+
+            //clearing form input
+            $('#item').val("");
+            $('#quantity').val("");
+            $('#selling_price').val("");
+            $('#total_cost').val("");
+            $('#remark').val("");
+            $('#item_id option:first').prop('selected', true);
+
+          });
+
+
+        </script>

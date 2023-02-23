@@ -1,0 +1,139 @@
+<form class="my-5" id="itemForm">
+    <div class="modal" id="myItem">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header" id="modal-body">
+                    <h4 class="modal-title">Add New Item</h4>
+                    <button type="button" class="close" data-dismiss="modal">
+                        &times;
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group col-12 mb-3">
+                        <label>Name</label>
+                        <input form="itemForm" type="text" name="name" class="form-control" />
+                    </div>
+                    <div class="form-group col-12 mb-3">
+                        <label>Desciption</label>
+                        <textarea form="itemForm" class="form-control" id="address" name="description"
+                            rows="2"></textarea>
+                    </div>
+                    <div class="form-group col-12 mb-3">
+                        <label>Brand</label>
+                        <input form="itemForm" type="text" name="brand" class="form-control" />
+                    </div>
+                    <div class="form-group col-12 mb-3">
+                        <label>Model</label>
+                        <input form="itemForm" type="text" name="model" class="form-control" />
+                    </div>
+                    <div class="form-group col-12 mb-3">
+                        <label>Manufacturer</label>
+                        <input form="itemForm" type="text" name="manufacturer" class="form-control" />
+                    </div>
+                    <div class="form-group col-12 mb-3">
+                        <label>Usage Mode</label><br />
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input form="itemForm" type="radio" class="form-check-input" name="usage_mode"
+                                    value="Sale" />Sale
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input form="itemForm" type="radio" class="form-check-input" name="usage_mode"
+                                    value="Lease" />Lease
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input form="itemForm" type="radio" class="form-check-input" name="usage_mode"
+                                    value="Use" />Use
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input form="itemForm" type="radio" class="form-check-input" name="usage_mode"
+                                    value="Consumption" />Consumption
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group col-12 mb-3">
+                        <label>Useful Life</label>
+                        <input form="itemForm" type="text" name="useful_life" class="form-control" />
+                    </div>
+                    <div class="form-group col-12 mb-3">
+                        <label>Manufacture Date</label>
+                        <input form="itemForm" type="date" name="manufacture_date" class="form-control" />
+                    </div>
+                    <div class="form-group col-12 mb-3">
+                        <label>Procurement Date</label>
+                        <input form="itemForm" type="date" name="procurement_date" class="form-control" />
+                    </div>
+                    <div class="form-group col-12 mb-3">
+                        <label>Color</label>
+                        <input form="itemForm" type="color" name="color" class="form-control" />
+                    </div>
+                    <div class="form-group col-12 mb-3">
+                        <label>Serial Number</label>
+                        <input form="itemForm" type="text" name="serial_number" class="form-control" />
+                    </div>
+                    <div class="form-group col-12 mb-3">
+                        <label>Type</label><br />
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input form="itemForm" type="radio" class="form-check-input" name="type"
+                                    value="Fixed" />Fixed
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input form="itemForm" type="radio" class="form-check-input" name="type"
+                                    value="Suppliable" />Suppliable
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group col-12 mb-3">
+                        <label>Photo</label>
+                        <input form="itemForm" type="file" id="item_photo" name="photo" class="form-control" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">
+                        Submit
+                    </button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    $(function () {
+        if ($('#itemForm').length > 0) {
+            console.log('Itemform present');
+        }
+
+        $("#itemForm").submit(function (e) {
+            e.preventDefault();
+            formData = new FormData(this);
+            console.log('formData =', formData);
+
+            $.ajax({
+                type: "POST",
+                url: "/add-item",
+                data: formData,
+                processData: false, //Don't process the file
+                contentType: false, //Set the content type to multipart/form-data
+                success: function (item) {
+
+                    $('select[name="item_id"]').append('<option value="' + item.id + '">' + item.name + '</option>')
+                    $('select[name="item_id"] option[value=' + item.id + ']').attr('selected', true)
+                    $('#myItem').modal('hide');
+                }
+            });
+        });
+    });
+</script>

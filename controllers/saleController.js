@@ -2,8 +2,6 @@ const Item = require("../models/Item");
 const Sale = require("../models/Sale");
 const User = require("../models/User");
 const SaleGroup = require("../models/SaleGroup");
-const ItemOut = require("../models/ItemOut");
-
 let getSales = async (req, res) => {
   try {
     let sale_groups = await SaleGroup.find();
@@ -61,7 +59,6 @@ let saveSale = async (req, res) => {
           item_id: item.id,
           quantity: quantity[i],
           selling_price,
-          total_cost: totalItemPrice,
           remark: remark[i],
           date,
         })
@@ -102,11 +99,11 @@ let deleteSale = async (req, res) => {
   res.redirect("/sales");
 };
 
-let getItemFromGroup = async (req, res) => {
+let getSalesFromGroup = async (req, res) => {
   let { group_id } = req.params;
   let itemsOuts = await ItemOut.find(["group_id", group_id]);
   for (const itemOut of itemsOuts) {
-    itemOut.item = await Item.findById(itemOut.item_id);
+    itemOut.item = await Item.findById(itemOut.item_id)
   }
   res.json(itemsOuts);
 };
@@ -117,5 +114,5 @@ module.exports = {
   editSale,
   updateSale,
   deleteSale,
-  getItemFromGroup,
+  getSalesFromGroup
 };

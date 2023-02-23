@@ -13,7 +13,7 @@
   <div class="container mt-5">
     <h1 class="my-3 text-dark">Add Consumption</h1>
 
-    <form action="" method="post" id="add-lease" class="row my-5" enctype="multipart/form-data">
+    <form action="" method="post" id="add-consumption" class="row my-5" enctype="multipart/form-data">
 
       <div class="form-group col-md-12 col-lg-6 mb-3">
         <label>Buyer</label>
@@ -33,12 +33,13 @@
           <span class="text">New User</span>
         </button>
       </div>
+
       <div class="form-group col-md-12 col-lg-6 mb-3">
         <label>Item</label>
         <select name="item_id" id="item_id" class="form-control">
           <option value="">Select an item</option>
           <% for(let item of items ) { %>
-            <option value="<%= item.id %>" data-selling_price="<%- item.selling_price %>">
+            <option value="<%= item.id %>">
               <%= item %>
             </option>
             <% } %>
@@ -165,31 +166,26 @@
         <!-- itemForm modal  -->
       </div>
 
-      <div class='form-group col-6'><label for="quantity">Quantity:</label>
-        <input class="form-control" type="number" id="quantity" name="quantity">
+      <div class='form-group col-4'><label for="quantity">Quantity:</label>
+        <input class="form-control" type="number" id="consumption_qty" name="quantity">
       </div>
-      <div class='form-group col-3'><label for="selling_price">Selling Price:</label>
-        <input class="form-control" type="number" id="selling_price" readonly name="selling_price">
+
+      <div class='form-group col-4'><label for="date">Date:</label>
+        <input class="form-control" type="datetime-local" id="date" name="date">
       </div>
-      <div class='form-group col-3'><label for="total_cost">Total amount:</label>
-        <input class="form-control" type="number" id="total_cost" name="total_cost">
+
+      <div class='form-group col-4'><label for="remark">Remark:</label>
+        <textarea name="remark" class="form-control" id="consumption_remark" cols="1" rows="1"></textarea>
       </div>
-      <div class='form-group col-6'><label for="date">Date:</label>
-        <input class="form-control" type="date" id="date" name="date">
-      </div>
-      <div class='form-group col-6'><label for="remark">Remark:</label>
-        <textarea name="remark" class="form-control" id="remark" cols="1" rows="3"></textarea>
-      </div>
+      
       <button type="button" class="btn btn-secondary my-2 mr-1" id="addItemBtn">Add New Item</button>
       <div class="container my-5" id="itemContainer" style="display: none;">
-        <h4 id="userView">Leasing item(s)</h4>
-        <table id="itemTable" class="table table-sm table-bordered">
+        <h4 id="consumptionView">Usable item(s)</h4>
+        <table id="consumptionTable" class="table table-sm table-bordered">
           <thead>
             <tr>
               <th>Item</th>
               <th>Quantity</th>
-              <th>Selling Price</th>
-              <th>Total</th>
               <th>Remarks</th>
             </tr>
           </thead>
@@ -198,7 +194,7 @@
           </tbody>
           <tfoot>
             <tr>
-              <th colspan="3">Total</th>
+              <th colspan="">Total</th>
               <th id="total" colspan="2"></th>
             </tr>
 
@@ -245,7 +241,7 @@
               </div>
               <div class="form-group col-12 mb-3">
                 <label>DOB</label>
-                <input type="date" name="dob" class="form-control" />
+                <input type="datetime-local" name="dob" class="form-control" />
               </div>
               <div class="form-group col-12 mb-3">
                 <label>Address</label>
@@ -288,56 +284,53 @@
   </div>
   <%- include('./includes/footer') %>
     <script>
-      // setting price based on the selected item 
-      $('#item_id').change(function (e) {
-        var cost = $(e.target).find('option:selected').data('selling_price');
-        $('#selling_price').val(cost);
+
+      var items = [];
+      var consumptionTable = $('#consumptionTable tbody');
+      var consumptionView = $('#consumptionView');
+ 
+      var currentDate = new Date();
+      $('#date').val(currentDate)
+      $('#addItemBtn').click(function () {
+        $('#itemContainer').show();
+        var item = $('#item_id option:selected').html();
+        var item_id = $('#item_id option:selected').val();
+        var quantity = $('#consumption_qty').val();
+        var remark = $('#consumption_remark').val();
+     
+
+        //add items to item array
+        items.push({ item, quantity, remark });
+        console.log(items);
+        //appending items to the table
+        consumptionTable.append(`
+          <tr>
+            <td>${item}<input type="hidden" name="item_id" value="${item_id}" form="add-consumption"></td>  
+            <td class="quantity">${quantity}<input type="hidden" name="quantity" value="${quantity}" form="add-consumption"></td>  
+            <td>${remark}<input type="hidden" name="remark" value="${remark}" form="add-consumption"></td>  
+          </tr>
+        `);
+        // calculating the totals
+        var total = 0;
+        $('.quantity').each(function (e, elem) {
+          total += Number($(elem).text())
+        })
+        $('#total').text('').append(total)
+        $('#totalVal').val(total)
+
+
+        //clearing form input
+        $('#item').val("");
+        $('#consumption_qty').val("");
+        $('#consumption_remark').val("");
+        $('#item_id option:first').prop('selected', true);
+
+
+
+
       });
 
 
-      $(function () {
-        $("#userForm").submit(function (e) {
-          e.preventDefault();
-          formData = new FormData(this);
-          $.ajax({
-            type: "POST",
-            url: "/add-user",
-            data: formData,
-            processData: false, //Don't process the file
-            contentType: false, //Set the content type to multipart/form-data
-            success: function (user) {
-
-              $('select[name="user_id"]').append('<option value="' + user.id + '">' + user.first_name + ' ' + user.last_name + '</option>')
-              $('select[name="user_id"] option[value=' + user.id + ']').attr('selected', true)
-              $('#myUser').modal('hide');
-            }
-          });
-        });
-      })
-
-      if ($('#itemForm').length > 0) {
-        console.log('Itemform present');
-      }
-
-      $("#itemForm").submit(function (e) {
-        e.preventDefault();
-        formData = new FormData(this);
-        console.log('formData =', formData);
-
-        $.ajax({
-          type: "POST",
-          url: "add-item",
-          data: formData,
-          processData: false, //Don't process the file
-          contentType: false, //Set the content type to multipart/form-data
-          success: function (item) {
-
-            $('select[name="item_id"]').append('<option value="' + item.id + '">' + item.name + '</option>')
-            $('select[name="item_id"] option[value=' + item.id + ']').attr('selected', true)
-            $('#myItem').modal('hide');
-          }
-        });
-      });
 
 
     </script>

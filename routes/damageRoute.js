@@ -6,7 +6,7 @@ const {
   saveDamage,
   editDamage,
   updateDamage,
-  getItemFromGroup
+  getDamagesFromGroup,
 } = require("../controllers/damageController");
 
 // damage routes
@@ -15,6 +15,7 @@ router.get("/add-damage", addDamage);
 router.post("/add-damage", saveDamage);
 router.get("/damage/:id/update", editDamage);
 router.post("/damage/:id/update", updateDamage);
-router.get("/get-items-from-group/:group_id", getItemFromGroup);
+router.get("/get-damages-from-group/:group_id", getDamagesFromGroup);
+
 
 module.exports = router;

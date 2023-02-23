@@ -56,12 +56,11 @@ let saveLease = async (req, res) => {
       let item = await Item.findById(item_id[i]);
       let selling_price = item.selling_price;
       let totalItemPrice = selling_price * quantity[i];
-      leases.push(
+       leases.push(
         new Lease({
           item_id: item.id,
           quantity: quantity[i],
           selling_price,
-          total_cost: totalItemPrice,
           remark: remark[i],
           date,
         })
@@ -102,14 +101,15 @@ let deleteLease = async (req, res) => {
   res.redirect("/leases");
 };
 
-let getItemFromGroup = async (req, res) => {
+let getLeasesFromGroup = async (req, res) => {
   let { group_id } = req.params;
-  let itemsOuts = await ItemOut.find(["group_id", group_id]);
-  for (const itemOut of itemsOuts) {
+  let ItemsOuts = await ItemOut.find(["group_id", group_id]);
+  for (const itemOut of ItemsOuts) {
     itemOut.item = await Item.findById(itemOut.item_id);
   }
-  res.json(itemsOuts);
+  res.json(ItemsOuts);
 };
+
 module.exports = {
   getLeases,
   addLease,
@@ -117,5 +117,5 @@ module.exports = {
   editLease,
   updateLease,
   deleteLease,
-  getItemFromGroup,
+  getLeasesFromGroup,
 };

@@ -8,7 +8,7 @@ let getUses = async (req, res) => {
   try {
     let use_groups = await UseGroup.find();
     for (const use_group of use_groups) {
-      use_group.buyer = await use_group.getUser();
+      use_group.user = await use_group.getUser();
       use_group.uses = await use_group.getUses();
       use_group.uses_description = [];
       for (const use of use_group.uses) {
@@ -40,13 +40,11 @@ let editUse = async (req, res) => {
 };
 
 let saveUse = async (req, res) => {
-  let { user_id, item_id, quantity, unit_cost, total_cost, remark, date } =
-    req.body;
+  let { user_id, item_id, quantity, remark, date } = req.body;
+  console.log("body = ", req.body); return
   if (!Array.isArray(item_id)) {
     item_id = [item_id];
     quantity = [quantity];
-    unit_cost = [unit_cost];
-    total_cost = [total_cost];
     remark = [remark];
   }
   try {
@@ -54,14 +52,13 @@ let saveUse = async (req, res) => {
     let uses = [];
     for (let i = 0; i < item_id.length; i++) {
       let item = await Item.findById(item_id[i]);
-      let selling_price = item.selling_price;
+      let selling_price = item.cost_price;
       let totalItemPrice = selling_price * quantity[i];
       uses.push(
         new Use({
           item_id: item.id,
           quantity: quantity[i],
           selling_price,
-          total_cost: totalItemPrice,
           remark: remark[i],
           date,
         })
@@ -102,14 +99,15 @@ let deleteUse = async (req, res) => {
   res.redirect("/uses");
 };
 
-let getItemFromGroup = async (req, res) => {
+let getUsesFromGroup = async (req, res) => {
   let { group_id } = req.params;
-  let itemsOuts = await ItemOut.find(["group_id", group_id]);
-  for (const itemOut of itemsOuts) {
+  let ItemsOuts = await ItemOut.find(["group_id", group_id]);
+  for (const itemOut of ItemsOuts) {
     itemOut.item = await Item.findById(itemOut.item_id);
   }
-  res.json(itemsOuts);
+  res.json(ItemsOuts);
 };
+
 module.exports = {
   getUses,
   addUse,
@@ -117,5 +115,5 @@ module.exports = {
   editUse,
   updateUse,
   deleteUse,
-  getItemFromGroup
+  getUsesFromGroup,
 };

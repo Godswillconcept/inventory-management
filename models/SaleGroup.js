@@ -1,5 +1,5 @@
 const ItemOutGroup = require("./ItemOutGroup");
-const User = require("./User");
+
 
 class SaleGroup extends ItemOutGroup {
   constructor(props = {}) {

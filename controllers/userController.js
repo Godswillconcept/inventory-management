@@ -46,6 +46,7 @@ let saveUser = async (req, res) => {
         if (err) {
           res.send(err);
         } else {
+          console.log("User Saved Successfully");
         }
       });
     }

@@ -11,15 +11,9 @@ class ItemIn extends Model {
     return "item_ins";
   }
 
-  static get classField() {
-    return `mode = '${this.name}'`;
-  }
 
   async getItem() {
     return await Item.findById(this.item_id);
-  }
-  async getVendor() {
-    return await Vendor.findById(this.vendor_id);
   }
 
  

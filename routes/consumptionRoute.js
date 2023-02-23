@@ -6,7 +6,7 @@ const {
   saveConsumption,
   editConsumption,
   updateConsumption,
-  getItemFromGroup
+  getConsumptionsFromGroup
 } = require("../controllers/consumptionController");
 
 // consumption routes
@@ -15,6 +15,6 @@ router.get("/add-consumption", addConsumption);
 router.post("/add-consumption", saveConsumption);
 router.get("/consumption/:id/update", editConsumption);
 router.post("/consumption/:id/update", updateConsumption);
-router.get("/get-items-from-group/:group_id", getItemFromGroup);
+router.get("/get-consumptions-from-group/:group_id", getConsumptionsFromGroup);
 
 module.exports = router;

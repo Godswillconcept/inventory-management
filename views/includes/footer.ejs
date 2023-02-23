@@ -60,75 +60,69 @@
 <!-- Page level custom scripts -->
 <script src="/js/demo/datatables-demo.js"></script>
 
-<!-- Page level plugins -->
-<!-- <script src="/vendor/chart.js/Chart.min.js"></script> -->
-
-<!-- Page level custom scripts -->
-<!-- <script src="/js/demo/chart-area-demo.js"></script>
-<script src="/js/demo/chart-pie-demo.js"></script> -->
 
 
 <script>
- 
+
 
 
 
 
   $(function () {
-    var items = [];
-    var itemTable = $('#itemTable tbody');
-    var userView = $('#userView');
-    $("#quantity, #cost").on("input", function () {
-      var quantity = $("#quantity").val();
-      var selling_price = $("#selling_price").val();
-      var total_cost = (quantity * selling_price);
-      $("#total_cost").val(total_cost);
-    });
-    var currentDate = new Date();
-    $('#date').val(currentDate)
-    $('#addItemBtn').click(function () {
-      $('#itemContainer').show();
-      var item = $('#item_id option:selected').html();
-      var item_id = $('#item_id option:selected').val();
-      var quantity = $('#quantity').val();
-      var remark = $('#remark').val();
-      var selling_price = $('#selling_price').val();
-      var total_cost = $('#total_cost').val();
+    // var items = [];
+    // var itemTable = $('#itemTable tbody');
+    // var userView = $('#userView');
+    // $("#quantity, #cost").on("input", function () {
+    //   var quantity = $("#quantity").val();
+    //   var selling_price = $("#selling_price").val();
+    //   var total_cost = (quantity * selling_price);
+    //   $("#total_cost").val(total_cost);
+    // });
+    // var currentDate = new Date();
+    // $('#date').val(currentDate)
+    // $('#addItemBtn').click(function () {
+    //   $('#itemContainer').show();
+    //   var item = $('#item_id option:selected').html();
+    //   var item_id = $('#item_id option:selected').val();
+    //   var quantity = $('#quantity').val();
+    //   var remark = $('#remark').val();
+    //   var selling_price = $('#selling_price').val();
+    //   var total_cost = $('#total_cost').val();
 
-      //add items to item array
-      items.push({ item, quantity, selling_price, total_cost, remark });
-      console.log(items);
-      //appending items to the table
-      itemTable.append(`
-        <tr>
-          <td>${item}<input type="hidden" name="item_id" value="${item_id}" form="add-sale"></td>  
-          <td>${quantity}<input type="hidden" name="quantity" value="${quantity}" form="add-sale"></td>  
-          <td>${selling_price}<input type="hidden" name="selling_price" value="${selling_price}" form="add-sale"></td>  
-          <td class="total_cost">${total_cost}<input type="hidden" name="total_cost" value="${total_cost}" form="add-sale"></td>  
-          <td>${remark}<input type="hidden" name="remark" value="${remark}" form="add-sale"></td>  
-        </tr>
-      `);
-      // calculating the totals
-      var total = 0;
-      $('.total_cost').each(function (e, elem) {
-        total += Number($(elem).text())
-      })
-      $('#total').text('').append(total)
-      $('#totalVal').val(total)
-
-
-      //clearing form input
-      $('#item').val("");
-      $('#quantity').val("");
-      $('#selling_price').val("");
-      $('#total_cost').val("");
-      $('#remark').val("");
-      $('#item_id option:first').prop('selected', true);
+    //   //add items to item array
+    //   items.push({ item, quantity, selling_price, total_cost, remark });
+    //   console.log(items);
+    //   //appending items to the table
+    //   itemTable.append(`
+    //     <tr>
+    //       <td>${item}<input type="hidden" name="item_id" value="${item_id}" form="add-sale"></td>  
+    //       <td>${quantity}<input type="hidden" name="quantity" value="${quantity}" form="add-sale"></td>  
+    //       <td>${selling_price}<input type="hidden" name="selling_price" value="${selling_price}" form="add-sale"></td>  
+    //       <td class="total_cost">${total_cost}<input type="hidden" name="total_cost" value="${total_cost}" form="add-sale"></td>  
+    //       <td>${remark}<input type="hidden" name="remark" value="${remark}" form="add-sale"></td>  
+    //     </tr>
+    //   `);
+    //   // calculating the totals
+    //   var total = 0;
+    //   $('.total_cost').each(function (e, elem) {
+    //     total += Number($(elem).text())
+    //   })
+    //   $('#total').text('').append(total)
+    //   $('#totalVal').val(total)
 
 
+    //   //clearing form input
+    //   $('#item').val("");
+    //   $('#quantity').val("");
+    //   $('#selling_price').val("");
+    //   $('#total_cost').val("");
+    //   $('#remark').val("");
+    //   $('#item_id option:first').prop('selected', true);
 
 
-    });
+
+
+    // });
 
 
 

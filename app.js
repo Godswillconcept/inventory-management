@@ -38,13 +38,6 @@ app.use(
   })
 );
 
-// test
-app.post("/submit", (req, res) => {
-  //Access the data sent in the request
-  var data = req.body;
-  // Send response
-  res.json(data);
-});
 
 // routes
 app.use(userRoute);

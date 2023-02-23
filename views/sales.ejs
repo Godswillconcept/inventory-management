@@ -44,7 +44,7 @@
                 <td scope="col"><%- `${sale.date?.toDateString()} (${sale.date?.toLocaleString().split(", ").pop()})` %></td>
                 <td scope=" col dropdown">
                     <button class="btn btn-sm btn-outline-success" data-target="#saleDetail" data-toggle="modal"
-                      onclick="getItemFromGroup('<%- sale.id %>', '<%- sale.buyer %>')"><i class="fas fa-bars"></i></button>
+                      onclick="getSalesFromGroup('<%- sale.id %>', '<%- sale.buyer %>')"><i class="fas fa-bars"></i></button>
                 </td>
               </tr>
               <% } %>
@@ -97,12 +97,12 @@
 
 
   <script>
-    function getItemFromGroup(group_id, buyer) {
-      console.log("buyer = ", buyer);
+    function getSalesFromGroup(group_id, buyer) {
+      console.log("buyer = ", buyer,'/get-items-from-group/' + group_id );
       $('#buyer').html(buyer)
       $.ajax({
         type: 'GET',
-        url: '/get-items-from-group/' + group_id,
+        url: '/get-sales-from-group/' + group_id,
         success: function (itemOuts) {
           console.log('itemOuts = ', itemOuts);
           let total = 0

@@ -62,7 +62,7 @@
                           class="fas fa-trash text-danger"></i> Delete</a></li>
                     </li><a href="/item/<%- item.id %>/details " class="dropdown-item"><i
                         class="fas fa-eye text-success"></i> Details</a></li>
-                    <% if (item.usage_mode=='Sale' ) { %>
+                    <% if (item.usage_mode=='Sale' || item.usage_mode=='Lease' ) { %>
                       <li><button type="button" class="dropdown-item" data-toggle="modal" data-target="#setPrice"
                           onclick=" $('#item_id').val('<%- item.id %>')"><i class="fas fa-money-bill text-primary"></i>
                           Set Price</button></li>
@@ -102,3 +102,27 @@
       </div>
     </div>
     <%- include('includes/footer') %>
+
+      <script>
+        $(function () {
+          //setPrice modal form
+          if ($('#priceForm').length > 0) {
+            $('#priceForm').submit(function (e) {
+              e.preventDefault();
+              var selling_price = $('#selling_price').val();
+              var item_id = $("#item_id").val()
+              console.log('selling_price = ', selling_price, 'item_id = ', item_id);
+              $.ajax({
+                type: 'POST',
+                url: '/item/:id/price',
+                data: { selling_price: selling_price, item_id: item_id },
+                success: function (response) {
+                  console.log(response);
+                  console.log("Price updated successfully");
+                  $('#setPrice').modal('hide');
+                }
+              })
+            })
+          }
+        });
+      </script>

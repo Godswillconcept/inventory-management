@@ -4,7 +4,7 @@
       <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
         <ol class="breadcrumb mb-0">
           <li class="breadcrumb-item"><a href="/">Home</a></li>
-          <li class="breadcrumb-item"><a href="/returns">Returns</a></li>
+          <li class="breadcrumb-item"><a href="/consumptions">Consumptions</a></li>
           <li class="breadcrumb-item active" aria-current="page">All</li>
         </ol>
       </nav>
@@ -13,12 +13,12 @@
   <div class="card shadow mb-4">
     <div class="card-header py-3">
       <div class="d-flex">
-        <h6 class=" p-2 m-0 font-weight-bold text-primary">Available Returns</h6>
-        <a href="/add-return" class="btn btn-primary float-right ml-auto btn-icon-split">
+        <h6 class=" p-2 m-0 font-weight-bold text-primary">Available Consumptions</h6>
+        <a href="/add-consumption" class="btn btn-primary float-right ml-auto btn-icon-split">
           <span class="icon text-white-50">
             <i class="fas fa-plus"></i>
           </span>
-          <span class="text">New Supply</span>
+          <span class="text">New Damage</span>
         </a>
       </div>
     </div>
@@ -27,24 +27,22 @@
         <table class="table table-bordered table-sm" id="dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
-              <th scope="col">Supplied by</th>
+              <th scope="col">Damaged by</th>
               <th scope="col">Item(s)</th>
-              <th scope="col">Total amount</th>
               <th scope="col">Date-time</th>
               <th scope="col"></th>
             </tr>
           </thead>
 
           <tbody>
-            <% for( let return of return_groups ) { %>
+            <% for( let consumption of consumption_groups ) { %>
               <tr>
-                <td scope="col"><%- return.returnee %></td>
-                <td scope="col"><%- return.returns_description %></td>
-                <td scope="col"><%- return.total_amount %></td>
-                <td scope="col"><%- `${return.date?.toDateString()} (${return.date?.toLocaleString().split(", ").pop()})` %></td>
+                <td scope="col"><%- consumption.consumer %></td>
+                <td scope="col"><%- consumption.consumptions_description %></td>
+                <td scope="col"><%- `${consumption.date?.toDateString()} (${consumption.date?.toLocaleString().split(", ").pop()})` %></td>
                 <td scope=" col dropdown">
-                    <button class="btn btn-sm btn-outline-success" data-target="#returnDetail" data-toggle="modal"
-                      onclick="getItemFromGroup('<%- return.id %>', '<%- return.returnee %>')"><i class="fas fa-bars"></i></button>
+                    <button class="btn btn-sm btn-outline-success" data-target="#consumptionDetail" data-toggle="modal"
+                      onclick="getConsumptionsFromGroup('<%- consumption.id %>', '<%- consumption.consumer %>')"><i class="fas fa-bars"></i></button>
                 </td>
               </tr>
               <% } %>
@@ -53,24 +51,23 @@
       </div>
     </div>
   </div>
-  <div class="modal" id="returnDetail">
+  <div class="modal" id="consumptionDetail">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">
-           <span id="returnee"></span>'s Transaction History
+           <span id="consumer"></span>'s Transaction History
           </h5>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body">
           <div class="table-responsive my-2">
-            <table class="table table-sm table-hovered return_detail" id="dataTable" width="100%" cellspacing="0">
+            <table class="table table-sm table-hovered consumption_detail" id="dataTable" width="100%" cellspacing="0">
               <thead>
                 <tr>
                   <th scope="col">S/N</th>
                   <th scope="col">Item</th>
                   <th scope="col">Quantity</th>
-                  <th scope="col">Amount paid</th>
                   <th scope="col">Actions</th>
                 </tr>
               </thead>
@@ -79,7 +76,7 @@
               </tbody>
               <tfoot>
                 <tr>
-                  <th scope="col" colspan="3">Total</th>
+                  <th scope="col" colspan="2">Total</th>
                   <th scope="col" colspan="2" id="total">Amount paid</th>
                 </tr>
               </tfoot>
@@ -97,30 +94,28 @@
 
 
   <script>
-    function getItemFromGroup(group_id, returnee) {
-      console.log("returnee = ", returnee);
-      $('#returnee').html(returnee)
+    function getConsumptionsFromGroup(group_id, consumer) {
+      console.log("consumer = ", consumer);
+      $('#consumer').html(consumer)
       $.ajax({
         type: 'GET',
-        url: '/get-items-from-group/' + group_id,
+        url: '/get-consumptions-from-group/' + group_id,
         success: function (itemOuts) {
           console.log('itemOuts = ', itemOuts);
           let total = 0
           let tbodyString = ''
           for (let i = 0; i < itemOuts.length; i++) {
             const element = itemOuts[i];
-            let total_cost = itemOuts[i].quantity * itemOuts[i].price
             tbodyString += `<tr>
               <td>${i + 1}</td>
               <td>${itemOuts[i].item.name}</td>
               <td>${itemOuts[i].quantity} unit(s)</td>
-              <td>${total_cost}</td>
               <td></td>
             </tr>`;
-            total += Number(total_cost);
-            console.log(total);
+            total += Number(itemOuts[i].quantity);
+            console.log(total);            
           }
-          $(".return_detail tbody").html(tbodyString);
+          $(".consumption_detail tbody").html(tbodyString);
           $('#total').text('').append(total);
         }
       });

@@ -8,7 +8,7 @@ let getDamages = async (req, res) => {
   try {
     let damage_groups = await DamageGroup.find();
     for (const damage_group of damage_groups) {
-      damage_group.buyer = await damage_group.getUser();
+      damage_group.destroyer = await damage_group.getUser();
       damage_group.damages = await damage_group.getDamages();
       damage_group.damages_description = [];
       for (const damage of damage_group.damages) {
@@ -26,7 +26,7 @@ let getDamages = async (req, res) => {
 };
 
 let addDamage = async (req, res) => {
-  let items = await Item.find(["usage_mode", "Damage"]);
+  let items = await Item.find();
   let users = await User.find();
   res.render("add-damage", { addDamage, items, users });
 };
@@ -40,8 +40,9 @@ let editDamage = async (req, res) => {
 };
 
 let saveDamage = async (req, res) => {
-  let { user_id, item_id, quantity, unit_cost, total_cost, remark, date } =
+  let { user_id, item_id, quantity, remark, date } =
     req.body;
+    // console.log(req.body);return
   if (!Array.isArray(item_id)) {
     item_id = [item_id];
     quantity = [quantity];
@@ -54,14 +55,13 @@ let saveDamage = async (req, res) => {
     let damages = [];
     for (let i = 0; i < item_id.length; i++) {
       let item = await Item.findById(item_id[i]);
-      let selling_price = item.selling_price;
+      let selling_price = item.cost_price;
       let totalItemPrice = selling_price * quantity[i];
       damages.push(
         new Damage({
           item_id: item.id,
           quantity: quantity[i],
           selling_price,
-          total_cost: totalItemPrice,
           remark: remark[i],
           date,
         })
@@ -102,14 +102,16 @@ let deleteDamage = async (req, res) => {
   res.redirect("/damages");
 };
 
-let getItemFromGroup = async (req, res) => {
+let getDamagesFromGroup = async (req, res) => {
   let { group_id } = req.params;
-  let itemsOuts = await ItemOut.find(["group_id", group_id]);
-  for (const itemOut of itemsOuts) {
+  let ItemsOuts = await ItemOut.find(["group_id", group_id]);
+  for (const itemOut of ItemsOuts) {
     itemOut.item = await Item.findById(itemOut.item_id);
   }
-  res.json(itemsOuts);
+  res.json(ItemsOuts);
 };
+
+
 module.exports = {
   getDamages,
   addDamage,
@@ -117,5 +119,5 @@ module.exports = {
   editDamage,
   updateDamage,
   deleteDamage,
-  getItemFromGroup
+  getDamagesFromGroup
 };
